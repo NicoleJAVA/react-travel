@@ -1,0 +1,9 @@
+// slider
+$slider-height: 250px;
+
+.slider {
+  text-align: center;
+  height: $slider-height;
+  line-height: $slider-height;
+  overflow: hidden;
+}
