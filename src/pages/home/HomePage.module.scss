@@ -1,0 +1,15 @@
+@import "../../scss/helpers/dimension";
+
+// row
+$row-margin-top: 20px;
+
+.content-box {
+  max-width: $primary-box-width;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 75vh;
+}
+
+.row {
+  margin-top: $row-margin-top;
+}
