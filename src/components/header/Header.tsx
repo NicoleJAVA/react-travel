@@ -2,8 +2,11 @@ import React from "react";
 import styles from "./Header.module.scss";
 import { Layout, Typography, Input, Menu, Button, Dropdown, Space } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 
 export const Header: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={styles["app-header"]}>
       {/* top-header */}
@@ -24,8 +27,8 @@ export const Header: React.FC = () => {
             </Dropdown.Button>
             <Button.Group>
               <Space>
-                <Button>登入</Button>
-                <Button>註冊</Button>
+                <Button onClick={() => navigate("/login")}>登入</Button>
+                <Button onClick={() => navigate("/register")}>註冊</Button>
               </Space>
             </Button.Group>
           </Space>
@@ -34,7 +37,11 @@ export const Header: React.FC = () => {
       {/* main header */}
       <div className={styles["main-header-box"]}>
         <div className={styles["main-header"]}>
-          <Typography.Title level={3} className={styles["title"]}>
+          <Typography.Title
+            level={3}
+            className={styles["title"]}
+            onClick={() => navigate("/")}
+          >
             櫻花旅遊網
           </Typography.Title>
           <Input.Search
