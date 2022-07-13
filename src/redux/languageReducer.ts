@@ -1,4 +1,4 @@
-interface LanguageState {
+export interface LanguageState {
   language: string;
   languageList: { name: string; code: string }[];
 }

@@ -3,8 +3,21 @@ import styles from "./Header.module.scss";
 import { Layout, Typography, Input, Menu, Button, Dropdown, Space } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
 import { withRouter, RouterComponentProps } from "../../helpers/withRouter";
+import store from "../../redux/store";
+import { LanguageState } from "../../redux/languageReducer";
 
-class HeaderComponent extends React.Component<RouterComponentProps> {
+interface State extends LanguageState {}
+
+class HeaderComponent extends React.Component<RouterComponentProps, State> {
+  constructor(props) {
+    super(props);
+    const storeState = store.getState();
+    this.state = {
+      language: storeState.language,
+      languageList: storeState.languageList,
+    };
+  }
+
   render(): React.ReactNode {
     const { navigate } = this.props;
 
@@ -17,14 +30,15 @@ class HeaderComponent extends React.Component<RouterComponentProps> {
             <Space>
               <Dropdown.Button
                 overlay={
-                  <Menu>
-                    <Menu.Item>中文</Menu.Item>
-                    <Menu.Item>English</Menu.Item>
-                  </Menu>
+                  <Menu
+                    items={this.state.languageList.map((language) => {
+                      return { key: language.code, label: language.name };
+                    })}
+                  ></Menu>
                 }
                 icon={<GlobalOutlined />}
               >
-                切換語言
+                {this.state.language === "zh" ? "中文" : "English"}
               </Dropdown.Button>
               <Button.Group>
                 <Space>
