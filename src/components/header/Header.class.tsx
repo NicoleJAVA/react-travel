@@ -16,7 +16,32 @@ class HeaderComponent extends React.Component<RouterComponentProps, State> {
       language: storeState.language,
       languageList: storeState.languageList,
     };
+    store.subscribe(this.handleStoreChange);
   }
+
+  handleStoreChange = () => {
+    const storeState = store.getState();
+    this.setState({
+      language: storeState.language,
+      languageList: storeState.languageList,
+    });
+  };
+
+  menuClickHandler = (e) => {
+    if (e.key === "new") {
+      const action = {
+        type: "add_language",
+        payload: { code: "some_new_lang", name: "某個新語言" },
+      };
+      store.dispatch(action);
+    } else {
+      const action = {
+        type: "change_language",
+        payload: e.key,
+      };
+      store.dispatch(action);
+    }
+  };
 
   render(): React.ReactNode {
     const { navigate } = this.props;
@@ -31,9 +56,13 @@ class HeaderComponent extends React.Component<RouterComponentProps, State> {
               <Dropdown.Button
                 overlay={
                   <Menu
-                    items={this.state.languageList.map((language) => {
-                      return { key: language.code, label: language.name };
-                    })}
+                    onClick={this.menuClickHandler}
+                    items={[
+                      ...this.state.languageList.map((language) => {
+                        return { key: language.code, label: language.name };
+                      }),
+                      { key: "new", label: "添加新語言" },
+                    ]}
                   ></Menu>
                 }
                 icon={<GlobalOutlined />}
