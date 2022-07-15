@@ -15,8 +15,11 @@ import { domesticProductList } from "./mockup";
 import suggestProductImg from "../../assets/img/suggest_products.png";
 import newProductImg from "../../assets/img/new_products.png";
 import domesticProductImg from "../../assets/img/domestic_products.png";
-export class HomePage extends React.Component {
+import { withTranslation, WithTranslation } from "react-i18next";
+class HomePageComponent extends React.Component<WithTranslation> {
   render() {
+    const { t } = this.props;
+
     return (
       <>
         <Header />
@@ -32,7 +35,7 @@ export class HomePage extends React.Component {
           <ProductCollection
             title={
               <Typography.Title level={3} className={theme["text-theme"]}>
-                熱銷推薦
+                {t("home_page.hot_recommended")}
               </Typography.Title>
             }
             sideImage={suggestProductImg}
@@ -41,7 +44,7 @@ export class HomePage extends React.Component {
           <ProductCollection
             title={
               <Typography.Title level={3} className={theme["text-theme"]}>
-                新品上市
+                {t("home_page.new_arrival")}
               </Typography.Title>
             }
             sideImage={newProductImg}
@@ -50,7 +53,7 @@ export class HomePage extends React.Component {
           <ProductCollection
             title={
               <Typography.Title level={3} className={theme["text-theme"]}>
-                國內旅遊
+                {t("home_page.domestic_travel")}
               </Typography.Title>
             }
             sideImage={domesticProductImg}
@@ -62,3 +65,5 @@ export class HomePage extends React.Component {
     );
   }
 }
+
+export const HomePage = withTranslation()(HomePageComponent); // 第一個小括號是命名空間
