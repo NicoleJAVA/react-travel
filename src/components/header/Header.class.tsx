@@ -98,7 +98,7 @@ class HeaderComponent extends React.Component<PropsType> {
             </Typography.Title>
             <Input.Search
               className={styles["search-input"]}
-              placeholder="請輸入旅遊目的地、主題、或關鍵字"
+              placeholder={t("header.search_placeholder")}
             />
           </div>
         </div>

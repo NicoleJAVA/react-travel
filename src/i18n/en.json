@@ -5,6 +5,7 @@
     "title": "Sakura Travel",
     "register": "Register",
     "login": "Login",
+    "search_placeholder": "Please enter travel destination, theme, or keywords.",
     "home_page": "Home",
     "weekend": "Weekend",
     "group": "Group",
