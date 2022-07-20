@@ -20,6 +20,9 @@ const mapStateToProps = (state: RootState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
+  // 要印 log 的話，記得把 index.ts 導出的檔案改成 Header.class
+  console.log("測試: 只會在初始化時印出", "mapDispatchToProps");
+
   return {
     changeLanguage: (code: "zh" | "en") => {
       const action = changeLanguageActionCreator(code);
@@ -41,8 +44,11 @@ type PropsType = RouterComponentProps &
 class HeaderComponent extends React.Component<PropsType> {
   menuClickHandler = (e) => {
     if (e.key === "new") {
+      // 要印 log 的話，記得把 index.ts 導出的檔案改成 Header.class
+      console.log("測試: 執行順序 1", "menuClickHandler ");
       this.props.addLanguage("某個新語言", "some_new_lang");
     } else {
+      console.log("測試: 執行順序 1", "menuClickHandler");
       this.props.changeLanguage(e.key);
     }
   };
