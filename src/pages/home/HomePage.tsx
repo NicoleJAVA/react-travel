@@ -14,45 +14,59 @@ import newProductImg from "../../assets/img/new_products.png";
 import domesticProductImg from "../../assets/img/domestic_products.png";
 import { withTranslation, WithTranslation } from "react-i18next";
 import axios from "axios";
+import { connect } from "react-redux";
+import { RootState } from "../../redux/store";
+import {
+  fetchRecommendProductStartActionCreator,
+  fetchRecommendProductSuccessActionCreator,
+  fetchRecommendProductFailActionCreator,
+} from "../../redux/recommendProduct/recommendProductActions";
 
-interface State {
-  loading: boolean;
-  error: string | null;
-  productList: any[];
-}
-class HomePageComponent extends React.Component<WithTranslation, State> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-      error: null,
-      productList: [],
-    };
-  }
+const mapStateToProps = (state: RootState) => {
+  return {
+    loading: state.recommendProduct.loading,
+    productList: state.recommendProduct.productList,
+    error: state.recommendProduct.error,
+  };
+};
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchStart: () => {
+      dispatch(fetchRecommendProductStartActionCreator());
+    },
+
+    fetchSuccess: (data) => {
+      dispatch(fetchRecommendProductSuccessActionCreator(data));
+    },
+
+    fetchFail: (error) => {
+      dispatch(fetchRecommendProductFailActionCreator(error));
+    },
+  };
+};
+
+type PropsType = WithTranslation &
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
+
+class HomePageComponent extends React.Component<PropsType> {
   async componentDidMount() {
+    this.props.fetchStart();
     try {
       const { data } = await axios.get(
         "http://123.56.149.216:8089/api/productCollections"
       );
-      this.setState({
-        loading: false,
-        error: null,
-        productList: data,
-      });
+      this.props.fetchSuccess(data);
     } catch (err) {
       if (err instanceof Error) {
-        this.setState({
-          error: err.message,
-          loading: false,
-        });
+        this.props.fetchFail(err.message);
       }
     }
   }
 
   render() {
-    const { t } = this.props;
-    const { productList, loading, error } = this.state;
+    const { t, productList, loading, error } = this.props;
 
     if (loading) {
       return (
@@ -123,4 +137,7 @@ class HomePageComponent extends React.Component<WithTranslation, State> {
   }
 }
 
-export const HomePage = withTranslation()(HomePageComponent); // 第一個小括號是命名空間
+export const HomePage = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withTranslation()(HomePageComponent)); // 第一個小括號是命名空間
