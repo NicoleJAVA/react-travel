@@ -6,6 +6,9 @@ import styles from "./DetailPage.module.scss";
 import theme from "../../Theme.module.scss";
 import { Header, Footer, ProductIntro, ProductReviews } from "../../components";
 import { reviewsMockData } from "./mockup";
+import { ProductDetailSlice } from "../../redux/productDetail/slice";
+import { useSelector } from "../../redux/hooks";
+import { useDispatch } from "react-redux";
 
 const { RangePicker } = DatePicker;
 
@@ -16,22 +19,29 @@ type MatchParams = {
 export const DetailPage: React.FC = () => {
   const { touristRouteId } = useParams<MatchParams>();
   let params = useParams<"touristRouteId">();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [product, setProduct] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
+
+  // 以下是使用 react toolkit 以前的寫法
+  // const [loading, setLoading] = useState<boolean>(true);
+  // const [product, setProduct] = useState<any>(null);
+  // const [error, setError] = useState<string | null>(null);
+
+  // 以下是使用 react toolkit 以後的寫法
+  const loading = useSelector((state) => state.productDetail.loading);
+  const product = useSelector((state) => state.productDetail.product);
+  const error = useSelector((state) => state.productDetail.error);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      dispatch(ProductDetailSlice.actions.fetchStart());
       try {
         const { data } = await axios.get(
           `http://123.56.149.216:8089/api/touristRoutes/${touristRouteId}`
         );
-        setProduct(data);
-        setLoading(false);
+        dispatch(ProductDetailSlice.actions.fetchSuccess(data));
       } catch (error) {
-        setLoading(false);
-        setError(error instanceof Error ? error.message : "error");
+        dispatch(ProductDetailSlice.actions.fetchFail(error.message));
       }
     };
     fetchData();
