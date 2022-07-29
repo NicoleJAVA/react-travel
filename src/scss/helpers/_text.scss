@@ -1,13 +1,16 @@
 @import "./color";
 
 .text-theme {
-  color: $purple !important;
+  color: $theme-color !important;
 }
 
 .text-main-title {
-  font-size: 24px;
+  font-size: 24px; // font size of <Typography.Text level={3}/>
   font-weight: 600;
+  color: $theme-color;
 }
 
 .text-content {
+  font-size: 14px;
+  $extra-dark-gray: #595959;
 }

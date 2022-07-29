@@ -98,7 +98,7 @@ export const ProductIntro: React.FC<PropsType> = ({
 
   return (
     <div className={styles["intro-container"]}>
-      <span className={styles["text-theme text-main-title"]}>{title}</span>
+      <span className={styles["text-main-title"]}>{title}</span>
       <Typography.Text>{shortDescription}</Typography.Text>
       <div className={styles["intro-detail-content"]}>
         <div className={styles["text-content"]}>
