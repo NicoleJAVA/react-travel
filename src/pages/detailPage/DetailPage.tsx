@@ -27,7 +27,7 @@ export const DetailPage: React.FC = () => {
 
   // 以下是使用 react toolkit 以後的寫法
   const loading = useSelector((state) => state.productDetail.loading);
-  const product = useSelector((state) => state.productDetail.product);
+  const product = useSelector((state) => state.productDetail.data);
   const error = useSelector((state) => state.productDetail.error);
 
   const dispatch = useDispatch();
@@ -41,7 +41,11 @@ export const DetailPage: React.FC = () => {
         );
         dispatch(ProductDetailSlice.actions.fetchSuccess(data));
       } catch (error) {
-        dispatch(ProductDetailSlice.actions.fetchFail(error.message));
+        dispatch(
+          ProductDetailSlice.actions.fetchFail(
+            error instanceof Error ? error.message : "Product detail API ERROR"
+          )
+        );
       }
     };
     fetchData();
