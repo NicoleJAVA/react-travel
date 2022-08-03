@@ -6,8 +6,11 @@ import styles from "./DetailPage.module.scss";
 import theme from "../../Theme.module.scss";
 import { Header, Footer, ProductIntro, ProductReviews } from "../../components";
 import { reviewsMockData } from "./mockup";
-import { ProductDetailSlice } from "../../redux/productDetail/slice";
-import { useSelector } from "../../redux/hooks";
+import {
+  ProductDetailSlice,
+  getProductDetail,
+} from "../../redux/productDetail/slice";
+import { useSelector, useAppDispatch } from "../../redux/hooks";
 import { useDispatch } from "react-redux";
 
 const { RangePicker } = DatePicker;
@@ -30,25 +33,12 @@ export const DetailPage: React.FC = () => {
   const product = useSelector((state) => state.productDetail.data);
   const error = useSelector((state) => state.productDetail.error);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const fetchData = async () => {
-      dispatch(ProductDetailSlice.actions.fetchStart());
-      try {
-        const { data } = await axios.get(
-          `http://123.56.149.216:8089/api/touristRoutes/${touristRouteId}`
-        );
-        dispatch(ProductDetailSlice.actions.fetchSuccess(data));
-      } catch (error) {
-        dispatch(
-          ProductDetailSlice.actions.fetchFail(
-            error instanceof Error ? error.message : "Product detail API ERROR"
-          )
-        );
-      }
-    };
-    fetchData();
+    if (touristRouteId) {
+      dispatch(getProductDetail(touristRouteId));
+    }
   }, []);
 
   if (loading) {
