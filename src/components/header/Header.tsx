@@ -75,6 +75,7 @@ export const Header: React.FC = () => {
           <Input.Search
             className={styles["search-input"]}
             placeholder={t("header.search_placeholder")}
+            onSearch={(keyword) => navigate("/search/" + keyword)}
           />
         </div>
       </div>

@@ -5,3 +5,5 @@ export * from "./sideMenu";
 export * from "./productCollection";
 export * from "./productIntro";
 export * from "./productReviews";
+export * from "./filterArea";
+export * from "./productList";
