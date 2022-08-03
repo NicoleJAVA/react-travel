@@ -68,11 +68,13 @@ export const SearchPage: React.FC = () => {
         </div>
         {/* product list */}
         <div className={styles["product-list-container"]}>
-          <ProductList
-            data={productList}
-            paging={pagination}
-            onPageChange={onPageChange}
-          />
+          {productList && (
+            <ProductList
+              data={productList}
+              paging={pagination}
+              onPageChange={onPageChange}
+            />
+          )}
         </div>
       </div>
       <Footer />
