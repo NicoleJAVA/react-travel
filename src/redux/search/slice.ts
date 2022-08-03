@@ -59,6 +59,7 @@ export const searchSlice = createSlice({
     ) => {
       state.loading = false;
       state.error = action.payload;
+      state.data = null;
     },
   },
 });
