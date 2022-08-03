@@ -26,6 +26,12 @@ export const Header: React.FC = () => {
     }
   };
 
+  const onSearchHandler = (keyword) => {
+    if (keyword) {
+      navigate("/search/" + keyword);
+    }
+  };
+
   return (
     <div className={styles["app-header"]}>
       {/* top-header */}
@@ -75,7 +81,7 @@ export const Header: React.FC = () => {
           <Input.Search
             className={styles["search-input"]}
             placeholder={t("header.search_placeholder")}
-            onSearch={(keyword) => navigate("/search/" + keyword)}
+            onSearch={onSearchHandler}
           />
         </div>
       </div>
