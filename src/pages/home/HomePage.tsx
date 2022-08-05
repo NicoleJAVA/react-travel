@@ -17,6 +17,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { RootState } from "../../redux/store";
 import { giveMeDataActionCreator } from "../../redux/recommendProduct/recommendProductActions";
+import { MainLayout } from "../../layout/mainLayout";
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -70,47 +71,43 @@ class HomePageComponent extends React.Component<PropsType> {
     const domesticProductList = productList[2].touristRoutes;
 
     return (
-      <>
-        <Header />
-        <div className={styles["content-box"]}>
-          <Row className={styles["row"]}>
-            <Col span={6}>
-              <SideMenu />
-            </Col>
-            <Col span={18}>
-              <Carousel />
-            </Col>
-          </Row>
-          <ProductCollection
-            title={
-              <Typography.Title level={3} className={theme["text-theme"]}>
-                {t("home_page.hot_recommended")}
-              </Typography.Title>
-            }
-            sideImage={suggestProductImg}
-            products={suggestProductList}
-          />
-          <ProductCollection
-            title={
-              <Typography.Title level={3} className={theme["text-theme"]}>
-                {t("home_page.new_arrival")}
-              </Typography.Title>
-            }
-            sideImage={newProductImg}
-            products={newProductList}
-          />
-          <ProductCollection
-            title={
-              <Typography.Title level={3} className={theme["text-theme"]}>
-                {t("home_page.domestic_travel")}
-              </Typography.Title>
-            }
-            sideImage={domesticProductImg}
-            products={domesticProductList}
-          />
-        </div>
-        <Footer />
-      </>
+      <MainLayout>
+        <Row className={styles["row"]}>
+          <Col span={6}>
+            <SideMenu />
+          </Col>
+          <Col span={18}>
+            <Carousel />
+          </Col>
+        </Row>
+        <ProductCollection
+          title={
+            <Typography.Title level={3} className={theme["text-theme"]}>
+              {t("home_page.hot_recommended")}
+            </Typography.Title>
+          }
+          sideImage={suggestProductImg}
+          products={suggestProductList}
+        />
+        <ProductCollection
+          title={
+            <Typography.Title level={3} className={theme["text-theme"]}>
+              {t("home_page.new_arrival")}
+            </Typography.Title>
+          }
+          sideImage={newProductImg}
+          products={newProductList}
+        />
+        <ProductCollection
+          title={
+            <Typography.Title level={3} className={theme["text-theme"]}>
+              {t("home_page.domestic_travel")}
+            </Typography.Title>
+          }
+          sideImage={domesticProductImg}
+          products={domesticProductList}
+        />
+      </MainLayout>
     );
   }
 }

@@ -1,0 +1,8 @@
+@import "../../../src/scss/helpers/dimension";
+
+.content-box {
+  max-width: $primary-box-width;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 75vh;
+}

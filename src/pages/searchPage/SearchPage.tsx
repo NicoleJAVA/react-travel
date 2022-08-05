@@ -7,6 +7,7 @@ import { Spin } from "antd";
 import { searchProduct } from "../../redux/search/slice";
 import { useSelector, useAppDispatch } from "../../redux/hooks";
 import { use } from "i18next";
+import { MainLayout } from "../../layout/mainLayout";
 
 type MatchParams = {
   keyword: string;
@@ -59,25 +60,21 @@ export const SearchPage: React.FC = () => {
   }
 
   return (
-    <>
-      <Header />
-      <div className={styles["page-content"]}>
-        {/* category filter */}
-        <div className={styles["product-list-container"]}>
-          <FilterArea />
-        </div>
-        {/* product list */}
-        <div className={styles["product-list-container"]}>
-          {productList && (
-            <ProductList
-              data={productList}
-              paging={pagination}
-              onPageChange={onPageChange}
-            />
-          )}
-        </div>
+    <MainLayout>
+      {/* category filter */}
+      <div className={styles["product-list-container"]}>
+        <FilterArea />
       </div>
-      <Footer />
-    </>
+      {/* product list */}
+      <div className={styles["product-list-container"]}>
+        {productList && (
+          <ProductList
+            data={productList}
+            paging={pagination}
+            onPageChange={onPageChange}
+          />
+        )}
+      </div>
+    </MainLayout>
   );
 };

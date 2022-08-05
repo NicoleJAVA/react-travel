@@ -12,6 +12,7 @@ import {
 } from "../../redux/productDetail/slice";
 import { useSelector, useAppDispatch } from "../../redux/hooks";
 import { useDispatch } from "react-redux";
+import { MainLayout } from "../../layout/mainLayout";
 
 const { RangePicker } = DatePicker;
 
@@ -61,89 +62,85 @@ export const DetailPage: React.FC = () => {
   }
 
   return (
-    <>
-      <Header />
-      <div className={styles["page-content"]}>
-        {/* product introduction and date selection */}
-        <div className={styles["product-intro-container"]}>
-          <Row>
-            {/* product detail */}
-            <Col span={13}>
-              <ProductIntro
-                title={product.title}
-                shortDescription={product.descirption}
-                price={product.originalPrice}
-                coupons={product.coupons}
-                points={product.points}
-                discount={product.discount}
-                rating={product.rating}
-                pictures={product.touristRoutePictures.map((img) => img.url)}
-              />
-            </Col>
-            {/* date selection */}
-            <Col span={11}>
-              <RangePicker open className={styles["range-picker"]} />
-            </Col>
-          </Row>
-        </div>
-        {/* menu anchor */}
-        <Anchor className={styles["product-detail-anchor"]}>
-          <Menu mode="horizontal">
-            <Menu.Item key="menu-features">
-              <Anchor.Link href="#features" title="產品特色"></Anchor.Link>
-            </Menu.Item>
-            <Menu.Item key="menu-fees">
-              <Anchor.Link href="#fees" title="產品費用"></Anchor.Link>
-            </Menu.Item>
-            <Menu.Item key="menu-booking-notes">
-              <Anchor.Link href="#booking-notes" title="預定須知"></Anchor.Link>
-            </Menu.Item>
-            <Menu.Item key="menu-reviews">
-              <Anchor.Link href="#reviews" title="旅客評價"></Anchor.Link>
-            </Menu.Item>
-          </Menu>
-        </Anchor>
-        {/* product features */}
-        <div id="features" className={styles["product-detail-container"]}>
-          <Divider orientation="center">
-            <div className={theme["text-main-title"]}>產品特色</div>
-          </Divider>
-          <div
-            dangerouslySetInnerHTML={{ __html: product.features }}
-            className={styles["product-subsection"]}
-          ></div>
-        </div>
-        {/* product fees */}
-        <div id="fees" className={styles["product-detail-container"]}>
-          <Divider orientation="center">
-            <div className={theme["text-main-title"]}>產品費用</div>
-          </Divider>
-          <div
-            dangerouslySetInnerHTML={{ __html: product.fees }}
-            className={styles["product-subsection"]}
-          ></div>
-        </div>
-        {/* booking notes */}
-        <div id="booking-notes" className={styles["product-detail-container"]}>
-          <Divider orientation="center">
-            <div className={theme["text-main-title"]}>預定須知</div>
-          </Divider>
-          <div
-            dangerouslySetInnerHTML={{ __html: product.notes }}
-            className={styles["product-subsection"]}
-          ></div>
-        </div>
-        {/* customer reviews */}
-        <div id="reviews" className={styles["product-detail-container"]}>
-          <Divider orientation="center">
-            <div className={theme["text-main-title"]}>旅客評價</div>
-          </Divider>
-          <div className={styles["customer-reviews-content"]}>
-            <ProductReviews data={reviewsMockData} />
-          </div>
+    <MainLayout>
+      {/* product introduction and date selection */}
+      <div className={styles["product-intro-container"]}>
+        <Row>
+          {/* product detail */}
+          <Col span={13}>
+            <ProductIntro
+              title={product.title}
+              shortDescription={product.descirption}
+              price={product.originalPrice}
+              coupons={product.coupons}
+              points={product.points}
+              discount={product.discount}
+              rating={product.rating}
+              pictures={product.touristRoutePictures.map((img) => img.url)}
+            />
+          </Col>
+          {/* date selection */}
+          <Col span={11}>
+            <RangePicker open className={styles["range-picker"]} />
+          </Col>
+        </Row>
+      </div>
+      {/* menu anchor */}
+      <Anchor className={styles["product-detail-anchor"]}>
+        <Menu mode="horizontal">
+          <Menu.Item key="menu-features">
+            <Anchor.Link href="#features" title="產品特色"></Anchor.Link>
+          </Menu.Item>
+          <Menu.Item key="menu-fees">
+            <Anchor.Link href="#fees" title="產品費用"></Anchor.Link>
+          </Menu.Item>
+          <Menu.Item key="menu-booking-notes">
+            <Anchor.Link href="#booking-notes" title="預定須知"></Anchor.Link>
+          </Menu.Item>
+          <Menu.Item key="menu-reviews">
+            <Anchor.Link href="#reviews" title="旅客評價"></Anchor.Link>
+          </Menu.Item>
+        </Menu>
+      </Anchor>
+      {/* product features */}
+      <div id="features" className={styles["product-detail-container"]}>
+        <Divider orientation="center">
+          <div className={theme["text-main-title"]}>產品特色</div>
+        </Divider>
+        <div
+          dangerouslySetInnerHTML={{ __html: product.features }}
+          className={styles["product-subsection"]}
+        ></div>
+      </div>
+      {/* product fees */}
+      <div id="fees" className={styles["product-detail-container"]}>
+        <Divider orientation="center">
+          <div className={theme["text-main-title"]}>產品費用</div>
+        </Divider>
+        <div
+          dangerouslySetInnerHTML={{ __html: product.fees }}
+          className={styles["product-subsection"]}
+        ></div>
+      </div>
+      {/* booking notes */}
+      <div id="booking-notes" className={styles["product-detail-container"]}>
+        <Divider orientation="center">
+          <div className={theme["text-main-title"]}>預定須知</div>
+        </Divider>
+        <div
+          dangerouslySetInnerHTML={{ __html: product.notes }}
+          className={styles["product-subsection"]}
+        ></div>
+      </div>
+      {/* customer reviews */}
+      <div id="reviews" className={styles["product-detail-container"]}>
+        <Divider orientation="center">
+          <div className={theme["text-main-title"]}>旅客評價</div>
+        </Divider>
+        <div className={styles["customer-reviews-content"]}>
+          <ProductReviews data={reviewsMockData} />
         </div>
       </div>
-      <Footer />
-    </>
+    </MainLayout>
   );
 };
