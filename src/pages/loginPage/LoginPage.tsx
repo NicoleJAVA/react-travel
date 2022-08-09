@@ -1,6 +1,11 @@
 import React from "react";
-// import styles from "./LoginPage.module.scss";
+import styles from "./LoginPage.module.scss";
+import { UserLayout } from "../../layout/userLayout";
 
 export const LoginPage: React.FC = () => {
-  return <h1>登入</h1>;
+  return (
+    <UserLayout>
+      <h1>登入</h1>
+    </UserLayout>
+  );
 };
