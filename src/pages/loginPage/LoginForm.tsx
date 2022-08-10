@@ -1,9 +1,9 @@
 import styles from "./LoginForm.module.scss";
 import { Form, Input, Button, Checkbox } from "antd";
-import { useDispatch } from "react-redux";
-import { useSelector } from "../../redux/hooks";
+import { useSelector, useAppDispatch } from "../../redux/hooks";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../redux/user/slice";
 
 const layout = {
   labelCol: { span: 8 },
@@ -17,10 +17,23 @@ export const LoginForm = () => {
   const loading = useSelector((selector) => selector.user.loading);
   const jwt = useSelector((selector) => selector.user.token);
   const error = useSelector((selector) => selector.user.error);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (jwt !== null) {
+      navigate("/");
+    }
+  }, [jwt]);
 
-  const onFinish = (values: any) => {};
+  const onFinish = (values: any) => {
+    dispatch(
+      login({
+        email: values.username,
+        password: values.password,
+      })
+    );
+  };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Login failed:", errorInfo);

@@ -5,6 +5,7 @@ import thunk from "redux-thunk";
 import { actionLog } from "./middlewares/actionLog";
 import { productDetailSlice } from "./productDetail/slice";
 import { searchSlice } from "./search/slice";
+import { userSlice } from "./user/slice";
 import {
   combineReducers,
   configureStore,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   recommendProduct: recommendProductReducer,
   productDetail: productDetailSlice.reducer,
   search: searchSlice.reducer,
+  user: userSlice.reducer,
 });
 
 // 使用 createAsyncThunk 以前的寫法:
