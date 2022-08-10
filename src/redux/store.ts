@@ -3,7 +3,7 @@ import languageReducer from "./language/languageReducer";
 import recommendProductReducer from "./recommendProduct/recommendProductReducer";
 import thunk from "redux-thunk";
 import { actionLog } from "./middlewares/actionLog";
-import { ProductDetailSlice } from "./productDetail/slice";
+import { productDetailSlice } from "./productDetail/slice";
 import { searchSlice } from "./search/slice";
 import {
   combineReducers,
@@ -14,7 +14,7 @@ import {
 const rootReducer = combineReducers({
   language: languageReducer,
   recommendProduct: recommendProductReducer,
-  productDetail: ProductDetailSlice.reducer,
+  productDetail: productDetailSlice.reducer,
   search: searchSlice.reducer,
 });
 

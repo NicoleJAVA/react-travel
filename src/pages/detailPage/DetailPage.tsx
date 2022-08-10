@@ -7,7 +7,7 @@ import theme from "../../Theme.module.scss";
 import { Header, Footer, ProductIntro, ProductReviews } from "../../components";
 import { reviewsMockData } from "./mockup";
 import {
-  ProductDetailSlice,
+  productDetailSlice,
   getProductDetail,
 } from "../../redux/productDetail/slice";
 import { useSelector, useAppDispatch } from "../../redux/hooks";
