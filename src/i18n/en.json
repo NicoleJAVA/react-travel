@@ -21,7 +21,10 @@
     "enterprise": "Enterprise",
     "high_end": "High-end",
     "outdoor": "Outdoor",
-    "insurance": "Insurance"
+    "insurance": "Insurance",
+    "shoppingCart": "cart",
+    "logout": "logout",
+    "welcome": "Welcome!"
   },
   "footer": {
     "detail": "All rights reserved @ SakuraTravel"

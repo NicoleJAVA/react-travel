@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Header.module.scss";
+import theme from "../../Theme.module.scss";
 import { Layout, Typography, Input, Menu, Button, Dropdown, Space } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
@@ -10,13 +11,27 @@ import {
   changeLanguageActionCreator,
 } from "../../redux/language/languageActions";
 import { useTranslation } from "react-i18next";
+import jwt_decode, { JwtPayload as DefaultJwtPayload } from "jwt-decode";
+import { userSlice } from "../../redux/user/slice";
 
+interface JwtPayload extends DefaultJwtPayload {
+  username: string;
+}
 export const Header: React.FC = () => {
   const navigate = useNavigate();
   const language = useSelector((state) => state.language.language);
   const languageList = useSelector((state) => state.language.languageList);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const jwt = useSelector((state) => state.user.token);
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    if (jwt) {
+      const token = jwt_decode<JwtPayload>(jwt);
+      setUsername(token.username);
+    }
+  }, [jwt]);
 
   const menuClickHandler = (e) => {
     if (e.key === "new") {
@@ -32,13 +47,25 @@ export const Header: React.FC = () => {
     }
   };
 
+  const onLogout = () => {
+    dispatch(userSlice.actions.logout());
+    navigate("/");
+    // window.location.reload(false);
+  };
+
   return (
     <div className={styles["app-header"]}>
       {/* top-header */}
       <div className={styles["top-header"]}>
         <div className={styles["top-header-box"]}>
-          {/* <Typography.Text>櫻花散冊</Typography.Text> */}
           <Space>
+            {jwt && (
+              <span
+                className={`${theme["text-content"]} ${styles["username"]}`}
+              >
+                {username}
+              </span>
+            )}
             <Dropdown.Button
               overlay={
                 <Menu
@@ -55,16 +82,25 @@ export const Header: React.FC = () => {
             >
               {language === "zh" ? "中文" : "English"}
             </Dropdown.Button>
-            <Button.Group>
-              <Space>
-                <Button onClick={() => navigate("/login")}>
-                  {t("header.login")}
-                </Button>
-                <Button onClick={() => navigate("/register")}>
-                  {t("header.register")}
-                </Button>
-              </Space>
-            </Button.Group>
+            {jwt ? (
+              <Button.Group className={styles["header-button-group"]}>
+                <Space>
+                  <Button>{t("header.shoppingCart")}</Button>
+                  <Button onClick={onLogout}>{t("header.logout")}</Button>
+                </Space>
+              </Button.Group>
+            ) : (
+              <Button.Group className={styles["header-button-group"]}>
+                <Space>
+                  <Button onClick={() => navigate("/login")}>
+                    {t("header.login")}
+                  </Button>
+                  <Button onClick={() => navigate("/register")}>
+                    {t("header.register")}
+                  </Button>
+                </Space>
+              </Button.Group>
+            )}
           </Space>
         </div>
       </div>
