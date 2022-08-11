@@ -14,9 +14,9 @@ const tailLayout = {
 };
 
 export const LoginForm = () => {
-  const loading = useSelector((selector) => selector.user.loading);
-  const jwt = useSelector((selector) => selector.user.token);
-  const error = useSelector((selector) => selector.user.error);
+  const loading = useSelector((state) => state.user.loading);
+  const jwt = useSelector((state) => state.user.token);
+  const error = useSelector((state) => state.user.error);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
