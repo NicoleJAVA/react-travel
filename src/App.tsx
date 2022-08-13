@@ -7,7 +7,16 @@ import {
   LoginPage,
   DetailPage,
   SearchPage,
+  ShoppingCart,
 } from "./pages";
+import { Navigate } from "react-router-dom";
+import { useSelector } from "./redux/hooks";
+
+const PrivateRoute = ({ children }) => {
+  const jwt = useSelector((state) => state.user.token);
+
+  return jwt ? children : <Navigate to="/login" />;
+};
 
 function App() {
   return (
@@ -19,6 +28,14 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/detail/:touristRouteId" element={<DetailPage />} />
           <Route path="/search/:keyword" element={<SearchPage />} />
+          <Route
+            path="/shoppingCart"
+            element={
+              <PrivateRoute>
+                <ShoppingCart />
+              </PrivateRoute>
+            }
+          />
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </BrowserRouter>
