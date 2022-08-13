@@ -11,6 +11,14 @@ import {
   configureStore,
   getDefaultMiddleware,
 } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["user"],
+};
 
 const rootReducer = combineReducers({
   language: languageReducer,
@@ -20,18 +28,22 @@ const rootReducer = combineReducers({
   user: userSlice.reducer,
 });
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 // 使用 createAsyncThunk 以前的寫法:
 // const store = createStore(rootReducer, applyMiddleware(thunk, actionLog));
 // 使用 createAsyncThunk 以後的寫法:
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(actionLog),
   devTools: true,
 });
 
+const persistor = persistStore(store);
+
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
-export default store;
+export default { store, persistor };
