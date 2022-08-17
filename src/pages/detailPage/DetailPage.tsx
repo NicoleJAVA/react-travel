@@ -70,7 +70,7 @@ export const DetailPage: React.FC = () => {
           <Col span={13}>
             <ProductIntro
               title={product.title}
-              shortDescription={product.descirption}
+              shortDescription={product.description}
               price={product.originalPrice}
               coupons={product.coupons}
               points={product.points}
