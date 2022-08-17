@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Spin, Row, Col, DatePicker, Divider, Anchor, Menu } from "antd";
+import { Button } from "antd";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 import styles from "./DetailPage.module.scss";
 import theme from "../../Theme.module.scss";
 import { Header, Footer, ProductIntro, ProductReviews } from "../../components";
@@ -13,6 +15,7 @@ import {
 import { useSelector, useAppDispatch } from "../../redux/hooks";
 import { useDispatch } from "react-redux";
 import { MainLayout } from "../../layout/mainLayout";
+import { addShoppingCartItem } from "../../redux/shoppingCart/slice";
 
 const { RangePicker } = DatePicker;
 
@@ -33,9 +36,11 @@ export const DetailPage: React.FC = () => {
   const loading = useSelector((state) => state.productDetail.loading);
   const product = useSelector((state) => state.productDetail.data);
   const error = useSelector((state) => state.productDetail.error);
-
   const dispatch = useAppDispatch();
 
+  // get data from store:
+  const jwt = useSelector((s) => s.user.token);
+  const shoppingCartLoading = useSelector((s) => s.shoppingCart.loading);
   useEffect(() => {
     if (touristRouteId) {
       dispatch(getProductDetail(touristRouteId));
@@ -81,6 +86,21 @@ export const DetailPage: React.FC = () => {
           </Col>
           {/* date selection */}
           <Col span={11}>
+            <div className={styles["shopping-cart-btn-container"]}>
+              <Button
+                type="primary"
+                danger
+                loading={shoppingCartLoading}
+                onClick={() => {
+                  dispatch(
+                    addShoppingCartItem({ jwt, touristRouteId: product.id })
+                  );
+                }}
+              >
+                <ShoppingCartOutlined />
+                加入購物車
+              </Button>
+            </div>
             <RangePicker open className={styles["range-picker"]} />
           </Col>
         </Row>
