@@ -10,6 +10,8 @@ interface ProductDetailState {
 
 const initialState: ProductDetailState = {
   data: null,
+  // 這裏 loading 初始值寫 false 會有問題，
+  // 會導致 DetailPage.tsx 的 useEffect 不會被呼叫
   loading: true,
   error: null,
 };
