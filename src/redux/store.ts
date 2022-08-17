@@ -3,9 +3,6 @@ import languageReducer from "./language/languageReducer";
 import recommendProductReducer from "./recommendProduct/recommendProductReducer";
 import thunk from "redux-thunk";
 import { actionLog } from "./middlewares/actionLog";
-import { productDetailSlice } from "./productDetail/slice";
-import { searchSlice } from "./search/slice";
-import { userSlice } from "./user/slice";
 import {
   combineReducers,
   configureStore,
@@ -13,6 +10,12 @@ import {
 } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+
+// slices:
+import { productDetailSlice } from "./productDetail/slice";
+import { searchSlice } from "./search/slice";
+import { userSlice } from "./user/slice";
+import { shoppingCartSlice } from "./shoppingCart/slice";
 
 const persistConfig = {
   key: "root",
@@ -26,6 +29,7 @@ const rootReducer = combineReducers({
   productDetail: productDetailSlice.reducer,
   search: searchSlice.reducer,
   user: userSlice.reducer,
+  shoppingCart: shoppingCartSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
