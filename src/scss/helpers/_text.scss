@@ -1,7 +1,14 @@
 @import "./color";
 
+$font-size-md: 14px;
+
 .text-theme {
   color: $theme-color !important;
+}
+
+.text-theme-md {
+  color: $theme-color !important;
+  font-size: $font-size-md;
 }
 
 .text-main-title {
@@ -11,6 +18,18 @@
 }
 
 .text-content {
-  font-size: 14px;
+  font-size: $font-size-md;
   color: $extra-dark-gray;
+  font-weight: 400;
+}
+
+.text-danger {
+  font-size: $font-size-md;
+  color: $red;
+}
+
+.text-delete {
+  font-size: $font-size-md;
+  color: $light-gray;
+  text-decoration: line-through;
 }

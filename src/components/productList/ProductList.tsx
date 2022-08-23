@@ -1,4 +1,6 @@
 import React from "react";
+import themeColors from "../../scss/helpers/themeColor.module.scss";
+import theme from "../../Theme.module.scss";
 import { Link } from "react-router-dom";
 import { List, Rate, Space, Image, Tag, Typography } from "antd";
 import { MessageOutlined, LikeOutlined, StarOutlined } from "@ant-design/icons";
@@ -20,7 +22,7 @@ interface Product {
 }
 interface PropsType {
   data: Product[];
-  paging: any;
+  paging?: any;
   onPageChange?: (nextPage, pageSize) => void;
 }
 
@@ -31,10 +33,16 @@ const listData = (productList: Product[]) =>
     description: p.description,
     tags: (
       <>
-        {p.departureCity && <Tag color="#f50">{p.departureCity}出发</Tag>}
-        {p.travelDays && <Tag color="#108ee9">{p.travelDays} 天 </Tag>}
-        {p.discountPresent && <Tag color="#87d068">超低折扣</Tag>}
-        {p.tripType && <Tag color="#2db7f5">{p.tripType}</Tag>}
+        {p.departureCity && (
+          <Tag color={themeColors["purple-100"]}>{p.departureCity} 出發</Tag>
+        )}
+        {p.travelDays && (
+          <Tag color={themeColors["purple-200"]}>{p.travelDays} 天 </Tag>
+        )}
+        {p.discountPresent && <Tag color={themeColors["purple"]}>超低折扣</Tag>}
+        {p.tripType && (
+          <Tag color={themeColors["purple-300"]}>{p.tripType}</Tag>
+        )}
       </>
     ),
     imgSrc: p.touristRoutePictures[0].url,
@@ -57,21 +65,31 @@ export const ProductList: React.FC<PropsType> = ({
   onPageChange,
 }) => {
   const products = listData(data);
+
+  console.log("測試: ", themeColors["extra-dark-gray"]);
+
   return (
     <List
       itemLayout="vertical"
       size="large"
-      pagination={{
-        current: paging.currentPage,
-        onChange: (page) => onPageChange && onPageChange(page, paging.pageSize),
-        pageSize: paging.pageSize,
-        total: paging.totalCount,
-      }}
+      pagination={
+        paging
+          ? {
+              current: paging.currentPage,
+              onChange: (page) =>
+                onPageChange && onPageChange(page, paging.pageSize),
+              pageSize: paging.pageSize,
+              total: paging.totalCount,
+            }
+          : false
+      }
       dataSource={products}
       footer={
-        <div>
-          搜索总路线: <Text strong>{paging.totalCount}</Text> 条
-        </div>
+        paging && (
+          <div>
+            搜索總路線: <Text strong>{paging.totalCount}</Text> 條
+          </div>
+        )
       }
       renderItem={(item) => (
         <List.Item
@@ -88,10 +106,10 @@ export const ProductList: React.FC<PropsType> = ({
               key="list-vertical-like-o"
             />,
             <>
-              <Rate defaultValue={3} />
+              {/* <Rate defaultValue={3} />
               <Text strong className="ant-rate-text">
                 {item.rating}
-              </Text>
+              </Text> */}
             </>,
           ]}
           extra={
@@ -103,28 +121,26 @@ export const ProductList: React.FC<PropsType> = ({
               <>
                 {item.discountPresent ? (
                   <>
-                    <Text style={{ fontSize: 20, fontWeight: 400 }} delete>
-                      ¥ {item.originalPrice}
-                    </Text>
-                    <Text
-                      type="danger"
-                      style={{ fontSize: 20, fontWeight: 400 }}
-                    >
+                    <span className={theme["text-delete"]}>
+                      $ {item.originalPrice}
+                    </span>
+                    <span className={theme["text-theme-md"]}>
                       {" "}
-                      ¥ {item.price}
-                    </Text>
+                      $ {item.price}
+                    </span>
                   </>
                 ) : (
-                  <Text style={{ fontSize: 20, fontWeight: 400 }}>
-                    ¥ {item.price}
-                  </Text>
+                  <span className={theme["text-theme-md"]}>$ {item.price}</span>
                 )}
-                <Link to={"/detail/" + item.id}> {item.title}</Link>
+                <Link to={"/detail/" + item.id}>
+                  {" "}
+                  <span className={theme["text-content"]}> {item.title} </span>
+                </Link>
               </>
             }
             description={item.tags}
           />
-          {item.description}
+          <span className={theme["text-content"]}> {item.description} </span>
         </List.Item>
       )}
     />

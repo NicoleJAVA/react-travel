@@ -1,0 +1,31 @@
+@import "./color";
+
+:export {
+  // red
+  red: $red;
+
+  // pink
+  light-rose: $light-rose;
+  light-coral: $light-coral;
+
+  // blue
+  ultra-light-blue: $ultra-light-blue;
+
+  // purple
+  purple: $purple;
+  purple-100: $purple-100;
+  purple-200: $purple-200;
+  purple-300: $purple-300;
+  purple-400: $purple-400;
+  purple-500: $purple-500;
+  light-satu-violet: $light-satu-violet;
+  ultra-dark-purple: $ultra-dark-purple;
+
+  // gray
+  light-gray: $light-gray;
+  mid-gray: $mid-gray;
+  extra-dark-gray: $extra-dark-gray;
+
+  // theme
+  theme-color: $theme-color;
+}
