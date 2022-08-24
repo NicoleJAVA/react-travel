@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import theme from "../../Theme.module.scss";
 import {
   Skeleton,
   Switch,
@@ -24,12 +25,12 @@ interface Item {
 
 const columns: ColumnsType<Item> = [
   {
-    title: "项目",
+    title: "項目",
     dataIndex: "item",
     key: "item",
   },
   {
-    title: "金额",
+    title: "金額",
     dataIndex: "amount",
     key: "amount",
   },
@@ -53,17 +54,13 @@ export const PaymentCard: React.FC<PropsType> = ({
   const paymentData: Item[] = [
     {
       key: 1,
-      item: "原价",
-      amount: <Text delete>¥ {originalPrice}</Text>,
+      item: "原價",
+      amount: <Text delete>$ {originalPrice}</Text>,
     },
     {
       key: 3,
-      item: "现价",
-      amount: (
-        <Title type="danger" level={2}>
-          ¥ {price}
-        </Title>
-      ),
+      item: "現價",
+      amount: <div className={theme["text-danger"]}>$ {price}</div>,
     },
   ];
 
@@ -73,7 +70,7 @@ export const PaymentCard: React.FC<PropsType> = ({
       actions={[
         <Button type="primary" danger onClick={onCheckout} loading={loading}>
           <CheckCircleOutlined />
-          下单支付
+          下單支付
         </Button>,
         <Button onClick={onShoppingCartClear} loading={loading}>
           <DeleteOutlined />
@@ -83,7 +80,7 @@ export const PaymentCard: React.FC<PropsType> = ({
     >
       <Skeleton loading={loading} active>
         <Meta
-          title={<Title level={2}>总计</Title>}
+          title={<div className={theme["text-content"]}>總計</div>}
           description={
             <Table<Item>
               columns={columns}
