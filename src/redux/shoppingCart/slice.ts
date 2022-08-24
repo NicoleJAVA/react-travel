@@ -62,6 +62,23 @@ export const deleteShoppingCartItems = createAsyncThunk(
   }
 );
 
+export const checkout = createAsyncThunk(
+  "shoppingCart/checkout",
+  async (jwt: string, thunkAPI) => {
+    const { data } = await axios.post(
+      `${API_BASE}/api/shoppingCart/items`,
+      null, // body 內容
+      {
+        headers: {
+          Authorization: `bearer ${jwt}`,
+        },
+      }
+    );
+
+    return data;
+  }
+);
+
 export const shoppingCartSlice = createSlice({
   name: "shoppingCart",
   initialState,
@@ -114,6 +131,20 @@ export const shoppingCartSlice = createSlice({
       state,
       action: PayloadAction<string | null>
     ) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    // checkout:
+    [checkout.pending.type]: (state) => {
+      state.loading = true;
+    },
+    [checkout.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.items = [];
+      state.error = null;
+    },
+    [checkout.rejected.type]: (state, action: PayloadAction<string | null>) => {
       state.loading = false;
       state.error = action.payload;
     },
