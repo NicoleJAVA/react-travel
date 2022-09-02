@@ -44,6 +44,7 @@ export const ShoppingCart: React.FC = () => {
                   )
                   .reduce((a, b) => a + b, 0)}
                 onCheckout={() => {
+                  if (shoppingCartItems.length <= 0) return;
 
                   dispatch(checkout(jwt));
                   navigate("/placeOrder");
