@@ -46,7 +46,7 @@ export const ShoppingCart: React.FC = () => {
                 onCheckout={() => {
 
                   dispatch(checkout(jwt));
-                  navigate("placeOrder");
+                  navigate("/placeOrder");
                 }}
                 onShoppingCartClear={() => {
                   dispatch(
