@@ -140,6 +140,7 @@ export const shoppingCartSlice = createSlice({
       state.loading = true;
     },
     [checkout.fulfilled.type]: (state, action) => {
+      console.log("測試: checkout A");
       state.loading = false;
       state.items = [];
       state.error = null;
