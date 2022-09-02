@@ -16,8 +16,6 @@ export type languageActionTypes = ChangeLanguageAction | AddeLanguageAction;
 export const changeLanguageActionCreator = (
   languageCode: "zh" | "en"
 ): ChangeLanguageAction => {
-  // console.log("測試: 執行順序 2", "changeLanguageActionCreator");
-
   return {
     type: CHANGE_LANGUAGE,
     payload: languageCode,
@@ -28,8 +26,6 @@ export const addLanguageActionCreator = (
   name: string,
   code: string
 ): AddeLanguageAction => {
-  // console.log("測試: 執行順序 2", "addLanguageActionCreator");
-
   return {
     type: ADD_LANGUAGE,
     payload: { name, code },

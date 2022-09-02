@@ -66,8 +66,6 @@ export const ProductList: React.FC<PropsType> = ({
 }) => {
   const products = listData(data);
 
-  console.log("測試: ", themeColors["extra-dark-gray"]);
-
   return (
     <List
       itemLayout="vertical"
