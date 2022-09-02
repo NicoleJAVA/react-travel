@@ -11,7 +11,7 @@ interface OrderState {
 
 const initialState: OrderState = {
   currentOrder: null,
-  loading: true,
+  loading: false,
   error: null,
 };
 
@@ -58,7 +58,6 @@ export const orderSlice = createSlice({
       state.loading = true;
     },
     [checkout.fulfilled.type]: (state, action) => {
-      console.log("測試: checkout B");
       state.loading = false;
       state.currentOrder = action.payload;
       state.error = null;
