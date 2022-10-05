@@ -32,7 +32,7 @@ function App() {
 
   return (
     <div>
-      <HashRouter basename="/react-travel">
+      <HashRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
