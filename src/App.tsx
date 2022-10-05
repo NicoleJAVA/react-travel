@@ -32,7 +32,7 @@ function App() {
 
   return (
     <div>
-      <BrowserRouter basename="/react-travel">
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
