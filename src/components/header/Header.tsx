@@ -64,6 +64,7 @@ export const Header: React.FC = () => {
         <div className={styles["top-header-box"]}>
           <Space>
             {jwt && (
+              // 雙 class
               <span
                 className={`${theme["text-content"]} ${styles["username"]}`}
               >
