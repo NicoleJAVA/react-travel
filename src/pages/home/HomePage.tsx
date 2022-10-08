@@ -4,7 +4,7 @@ import styles from "./HomePage.module.scss";
 import {
   Header,
   Footer,
-  Carousel,
+  // Carousel,
   SideMenu,
   ProductCollection,
 } from "../../components";
@@ -77,7 +77,7 @@ class HomePageComponent extends React.Component<PropsType> {
             <SideMenu />
           </Col>
           <Col span={18}>
-            <Carousel />
+            {/* <Carousel /> */}
           </Col>
         </Row>
         <ProductCollection
