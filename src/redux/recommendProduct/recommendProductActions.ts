@@ -57,8 +57,10 @@ export const giveMeDataActionCreator =
       dispatch(fetchRecommendProductStartActionCreator());
       try {
         const { data } = await axios.get(
-          "http://123.56.149.216:8089/api/productCollections"
+          // "http://123.56.149.216:8089/api/productCollections"
+          "https://vue3-course-api.hexschool.io/api/matchakuma/products/all"
         );
+        console.log('/products/all data:', data);
         dispatch(fetchRecommendProductSuccessActionCreator(data));
       } catch (err) {
         if (err instanceof Error) {
