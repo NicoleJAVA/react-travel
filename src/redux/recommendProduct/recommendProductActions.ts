@@ -53,16 +53,16 @@ export const fetchRecommendProductFailActionCreator = (
 
 export const giveMeDataActionCreator =
   (): ThunkAction<void, RootState, unknown, RecommendProductAction> =>
-  async (dispatch, getState) => {
-    dispatch(fetchRecommendProductStartActionCreator());
-    try {
-      const { data } = await axios.get(
-        "http://123.56.149.216:8089/api/productCollections"
-      );
-      dispatch(fetchRecommendProductSuccessActionCreator(data));
-    } catch (err) {
-      if (err instanceof Error) {
-        dispatch(fetchRecommendProductFailActionCreator(err.message));
+    async (dispatch, getState) => {
+      dispatch(fetchRecommendProductStartActionCreator());
+      try {
+        const { data } = await axios.get(
+          "http://123.56.149.216:8089/api/productCollections"
+        );
+        dispatch(fetchRecommendProductSuccessActionCreator(data));
+      } catch (err) {
+        if (err instanceof Error) {
+          dispatch(fetchRecommendProductFailActionCreator(err.message));
+        }
       }
-    }
-  };
+    };
