@@ -1,6 +1,7 @@
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";
 import axios from "axios";
+import { API_BASE } from "../helper/apiHelper";
 
 export const FETCH_RECOMMEND_PRODUCT_START = "FETCH_RECOMMEND_PRODUCT_START";
 export const FETCH_RECOMMEND_PRODUCT_SUCCESS =
@@ -58,9 +59,9 @@ export const giveMeDataActionCreator =
       try {
         const { data } = await axios.get(
           // "http://123.56.149.216:8089/api/productCollections"
-          "https://vue3-course-api.hexschool.io/api/matchakuma/products/all"
+          API_BASE + "/products/all"
         );
-        console.log('/products/all data:', data);
+        console.log('/products/all data:', data); // todo
         dispatch(fetchRecommendProductSuccessActionCreator(data));
       } catch (err) {
         if (err instanceof Error) {

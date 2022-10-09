@@ -23,7 +23,7 @@ export default (state = defaultState, action: RecommendProductAction) => {
       return { ...state, loading: true };
 
     case FETCH_RECOMMEND_PRODUCT_SUCCESS:
-      return { ...state, loading: false, productList: action.payload };
+      return { ...state, loading: false, productList: action.payload.products };
 
     case FETCH_RECOMMEND_PRODUCT_FAIL:
       return { ...state, loading: false, error: action.payload };

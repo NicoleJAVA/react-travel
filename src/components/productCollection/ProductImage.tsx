@@ -21,9 +21,9 @@ export const ProductImage: React.FC<PropsType> = ({
   return (
     <Link to={`/detail/${id}`}>
       {size === "large" ? (
-        <Image src={imageSrc} height={285} width={490} />
+        <Image src={imageSrc} height={316} width={379} />
       ) : (
-        <Image src={imageSrc} height={120} width={240} />
+        <Image src={imageSrc} height={230} width={276} />
       )}
       <div>
         <Typography.Text className={theme["text-theme"]} strong>

@@ -66,9 +66,9 @@ class HomePageComponent extends React.Component<PropsType> {
       return <div>網站發生錯誤： {error}</div>;
     }
 
-    const suggestProductList = productList[0].touristRoutes;
-    const newProductList = productList[1].touristRoutes;
-    const domesticProductList = productList[2].touristRoutes;
+    const suggestProductList = productList;
+    const newProductList = productList;
+    const domesticProductList = productList;
 
     return (
       <MainLayout>
