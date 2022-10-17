@@ -15,8 +15,8 @@ import storage from "redux-persist/lib/storage";
 import { productDetailSlice } from "./productDetail/slice";
 import { searchSlice } from "./search/slice";
 import { userSlice } from "./user/slice";
-import { shoppingCartSlice } from "./shoppingCart/slice";
-import { orderSlice } from "./order/slice";
+import { shoppingCartSlice, updateCartMiddleware } from "./shoppingCart/slice";
+import { orderSlice, payOrderMiddleware } from "./order/slice";
 
 const persistConfig = {
   key: "root",
@@ -42,7 +42,9 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(actionLog),
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(actionLog).concat(updateCartMiddleware.middleware)
   devTools: true,
 });
 

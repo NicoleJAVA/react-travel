@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_BASE } from "../helper/apiHelper";
+import { API_SOURCE, UDEMY } from '../../helpers/constants';
+import { createListenerMiddleware } from "@reduxjs/toolkit";
 
+const isUdemy = API_SOURCE === UDEMY;
 interface ShoppingCartState {
   items: any[];
   loading: boolean;
@@ -17,13 +20,18 @@ const initialState: ShoppingCartState = {
 export const getShoppingCart = createAsyncThunk(
   "shoppingCart/getShoppingCart",
   async (jwt: string, thunkAPI) => {
-    const { data } = await axios.get(`${API_BASE}/api/shoppingCart`, {
+    const api = isUdemy ? `${API_BASE}/api/shoppingCart` : `${API_BASE}/cart`;
+    const { data } = await axios.get(api, {
       headers: {
         Authorization: `bearer ${jwt}`,
       },
     });
 
-    return data.shoppingCartItems;
+    if (isUdemy) {
+      return data.shoppingCartItems;
+    } else {
+      return data.data;
+    }
   }
 );
 
@@ -47,6 +55,23 @@ export const addShoppingCartItem = createAsyncThunk(
   }
 );
 
+export const updateCart = createAsyncThunk(
+  "shoppingCart/updateCart",
+  async (parameters: { cartId: string, productId: string; qty: number }, thunkAPI) => {
+    const { data } = await axios.put(
+      `${API_BASE}/cart/${parameters.cartId}`,
+      {
+        data: {
+          product_id: parameters.productId,
+          qty: parameters.qty,
+        },
+      },
+    );
+
+    return data;
+  }
+);
+
 export const deleteShoppingCartItems = createAsyncThunk(
   "shoppingCart/deleteShoppingCartItems",
   async (params: { jwt: string; itemIds: number[] }, thunkAPI) => {
@@ -62,22 +87,23 @@ export const deleteShoppingCartItems = createAsyncThunk(
   }
 );
 
-export const checkout = createAsyncThunk(
-  "shoppingCart/checkout",
-  async (jwt: string, thunkAPI) => {
-    const { data } = await axios.post(
-      `${API_BASE}/api/shoppingCart/checkout`,
-      null, // body 內容
-      {
-        headers: {
-          Authorization: `bearer ${jwt}`,
-        },
-      }
-    );
+// Udemy version
+// export const checkout = createAsyncThunk(
+//   "shoppingCart/checkout",
+//   async (jwt: string, thunkAPI) => {
+//     const { data } = await axios.post(
+//       `${API_BASE}/api/shoppingCart/checkout`,
+//       null, // body 內容
+//       {
+//         headers: {
+//           Authorization: `bearer ${jwt}`,
+//         },
+//       }
+//     );
 
-    return data;
-  }
-);
+//     return data;
+//   }
+// );
 
 export const shoppingCartSlice = createSlice({
   name: "shoppingCart",
@@ -135,18 +161,44 @@ export const shoppingCartSlice = createSlice({
       state.error = action.payload;
     },
 
-    // checkout:
-    [checkout.pending.type]: (state) => {
+    // // checkout:
+    // [checkout.pending.type]: (state) => {
+    //   state.loading = true;
+    // },
+    // [checkout.fulfilled.type]: (state, action) => {
+    //   state.loading = false;
+    //   state.items = [];
+    //   state.error = null;
+    // },
+    // [checkout.rejected.type]: (state, action: PayloadAction<string | null>) => {
+    //   state.loading = false;
+    //   state.error = action.payload;
+    // },
+
+    // update shopping cart:
+    [updateCart.pending.type]: (state) => {
       state.loading = true;
     },
-    [checkout.fulfilled.type]: (state, action) => {
+    [updateCart.fulfilled.type]: (state, action) => {
       state.loading = false;
-      state.items = [];
       state.error = null;
     },
-    [checkout.rejected.type]: (state, action: PayloadAction<string | null>) => {
+    [updateCart.rejected.type]: (
+      state,
+      action: PayloadAction<string | null>
+    ) => {
       state.loading = false;
       state.error = action.payload;
     },
   },
 });
+
+export const updateCartMiddleware = createListenerMiddleware();
+
+updateCartMiddleware.startListening({
+  actionCreator: updateCart.fulfilled,
+  effect: (_, { dispatch, unsubscribe }) => {
+    dispatch(getShoppingCart(""));
+  },
+});
+

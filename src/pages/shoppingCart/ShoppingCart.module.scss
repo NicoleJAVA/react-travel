@@ -1,3 +1,5 @@
+@import "../../../src/scss/helpers/color";
+
 .product-list-container {
   padding: 20px;
   margin-top: 20px;
@@ -7,4 +9,133 @@
 .payment-card-container {
   margin-top: 20px;
   margin-left: 50px;
+}
+
+.cart-item {
+  margin-bottom: 4px;
+  display: flex;
+  font-size: 14px;
+  color: $purple
+}
+
+.cart-item-text {}
+
+.cart-item-img {
+  width: 204px;
+  height: 170px;
+}
+
+.cart-item-divider {
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px solid $purple;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.cart-item-second-row {
+  display: flex;
+}
+
+.cart-item-qty-buttons {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.left-rounded {
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  border: 1px solid $purple;
+  background: transparent;
+  border-radius: 20px 0 0 20px;
+  margin-right: 0;
+  cursor: pointer;
+}
+
+.right-rounded {
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  border: 1px solid $purple;
+  background: transparent;
+  border-left: 0 solid;
+  border-radius: 0 20px 20px 0;
+  margin-right: 0;
+  cursor: pointer;
+}
+
+.left-rounded:disabled {
+  border: 1px solid #a2a2a2;
+}
+
+.cart-checkout-section {
+  margin-top: 40px;
+  padding: 30px;
+  background: $light-purple;
+  width: 400px;
+  height: 460px;
+}
+
+.cart-checkout-title {
+  padding: 5px 10px 5px 10px;
+  width: fit-content;
+  margin: auto;
+  margin-bottom: 80px;
+  margin-top: 20px;
+  color: $middle-lavender;
+  border: 3px solid $middle-lavender;
+  border-radius: 10px;
+  letter-spacing: 2px;
+  font-weight: 500;
+}
+
+.checkout-row {
+  display: flex;
+  margin-bottom: 30px;
+  font-size: 16px;
+  justify-content: space-between;
+}
+
+.checkout-left-col {
+  display: flex;
+  flex: 0 0 auto;
+  width: 45%;
+}
+
+.checkout-label {
+  width: 75px;
+  padding: 7px;
+  background: $middle-lavender;
+  color: white;
+}
+
+.checkout-right-col {
+  display: flex;
+  width: 45%;
+  align-items: center;
+  flex-direction: row-reverse;
+  flex: 0 0 auto;
+  color: $middle-lavender;
+}
+
+.coupon-input {
+  width: 100%;
+  border: 1px solid $purple;
+  border-radius: 8px;
+  padding: 5px 10px 5px 10px;
+}
+
+.coupon-btn {
+  width: 100%;
+  background: $middle-lavender;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
 }

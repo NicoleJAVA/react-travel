@@ -3,11 +3,11 @@
 $font-size-md: 14px;
 
 .text-theme {
-  color: $theme-color !important;
+  color: $theme-color  !important;
 }
 
 .text-theme-md {
-  color: $theme-color !important;
+  color: $theme-color  !important;
   font-size: $font-size-md;
 }
 
@@ -32,4 +32,22 @@ $font-size-md: 14px;
   font-size: $font-size-md;
   color: $light-gray;
   text-decoration: line-through;
+}
+
+
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: $input-placeholder-color;
+  opacity: 1;
+  /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: $input-placeholder-color;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: $input-placeholder-color;
 }
