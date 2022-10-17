@@ -6,3 +6,4 @@ export * from "./searchPage";
 export * from "./shoppingCart";
 export * from "./placeOrder";
 export * from "./userForm";
+export * from "./checkoutPage";

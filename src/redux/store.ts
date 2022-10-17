@@ -45,6 +45,7 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     }).concat(actionLog).concat(updateCartMiddleware.middleware)
+      .concat(payOrderMiddleware.middleware),
   devTools: true,
 });
 

@@ -14,6 +14,7 @@ import { Navigate } from "react-router-dom";
 import { useSelector, useAppDispatch } from "./redux/hooks";
 import { getShoppingCart } from "./redux/shoppingCart/slice";
 import { UserForm } from './pages/userForm/UserForm';
+import { CheckoutPage } from './pages/checkoutPage/CheckoutPage';
 
 const PrivateRoute = ({ children }) => {
   const jwt = useSelector((state) => state.user.token);
@@ -41,6 +42,7 @@ function App() {
           <Route path="/detail/:touristRouteId" element={<DetailPage />} />
           <Route path="/search/:keyword" element={<SearchPage />} />
           <Route path="/userForm" element={<UserForm />} />
+          <Route path="/checkout/:orderId" element={<CheckoutPage />} />
           <Route
             path="/shoppingCart"
             element={
