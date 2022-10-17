@@ -13,6 +13,7 @@ import {
 import { useTranslation } from "react-i18next";
 import jwt_decode, { JwtPayload as DefaultJwtPayload } from "jwt-decode";
 import { userSlice } from "../../redux/user/slice";
+import { API_SOURCE, UDEMY } from '../../helpers/constants';
 
 interface JwtPayload extends DefaultJwtPayload {
   username: string;
@@ -57,6 +58,18 @@ export const Header: React.FC = () => {
     // window.location.reload(false);
   };
 
+  const isUdemy = API_SOURCE === UDEMY;
+  const HEXO = !isUdemy;
+  let UDEMY_LOGIN = false;
+  let UDEMY_NOT_LOGIN = false;
+  if (isUdemy) {
+    if (jwt) {
+      UDEMY_LOGIN = true;
+    } else {
+      UDEMY_NOT_LOGIN = true;
+    }
+  }
+
   return (
     <div className={styles["app-header"]}>
       {/* top-header */}
@@ -87,7 +100,23 @@ export const Header: React.FC = () => {
             >
               {language === "zh" ? "中文" : "English"}
             </Dropdown.Button>
-            {jwt ? (
+            {/* Hexo */}
+            {
+              HEXO &&
+              <Button.Group className={styles["header-button-group"]}>
+                <Space>
+                  <Button
+                    loading={shoppingCartLoading}
+                    onClick={() => navigate("/shoppingCart")}
+                  >
+                    {t("header.shoppingCart")}({shoppingCartItems.length})
+                  </Button>
+                </Space>
+              </Button.Group>
+            }
+            {/* Udemy, 已登入 */}
+            {
+              UDEMY_LOGIN &&
               <Button.Group className={styles["header-button-group"]}>
                 <Space>
                   <Button
@@ -99,8 +128,10 @@ export const Header: React.FC = () => {
                   <Button onClick={onLogout}>{t("header.logout")}</Button>
                 </Space>
               </Button.Group>
-            ) : (
-              <Button.Group className={styles["header-button-group"]}>
+            }
+            {/* Udemy, 未登入 */}
+            {
+              UDEMY_NOT_LOGIN && <Button.Group className={styles["header-button-group"]}>
                 <Space>
                   <Button onClick={() => navigate("/login")}>
                     {t("header.login")}
@@ -110,7 +141,7 @@ export const Header: React.FC = () => {
                   </Button>
                 </Space>
               </Button.Group>
-            )}
+            }
           </Space>
         </div>
       </div>
@@ -153,6 +184,6 @@ export const Header: React.FC = () => {
         </Menu>
       </div>
       {/* footer */}
-    </div>
+    </div >
   );
 };

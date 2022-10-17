@@ -1,12 +1,15 @@
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";
 import axios from "axios";
+import { API_SOURCE, UDEMY } from "../../helpers/constants";
 import { API_BASE } from "../helper/apiHelper";
 
 export const FETCH_RECOMMEND_PRODUCT_START = "FETCH_RECOMMEND_PRODUCT_START";
 export const FETCH_RECOMMEND_PRODUCT_SUCCESS =
   "FETCH_RECOMMEND_PRODUCT_SUCCESS";
 export const FETCH_RECOMMEND_PRODUCT_FAIL = "FETCH_RECOMMEND_PRODUCT_FAIL";
+
+const isUdemy = API_SOURCE === UDEMY;
 
 interface FetchRecommendProductStartAction {
   type: typeof FETCH_RECOMMEND_PRODUCT_START;
@@ -57,11 +60,9 @@ export const giveMeDataActionCreator =
     async (dispatch, getState) => {
       dispatch(fetchRecommendProductStartActionCreator());
       try {
-        const { data } = await axios.get(
-          // "http://123.56.149.216:8089/api/productCollections"
-          API_BASE + "/products/all"
-        );
-        console.log('/products/all data:', data); // todo
+        const api = isUdemy ? API_BASE + "/api/productCollections"
+          : API_BASE + "/products/all";
+        const { data } = await axios.get(api);
         dispatch(fetchRecommendProductSuccessActionCreator(data));
       } catch (err) {
         if (err instanceof Error) {

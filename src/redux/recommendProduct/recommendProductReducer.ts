@@ -4,6 +4,7 @@ import {
   FETCH_RECOMMEND_PRODUCT_SUCCESS,
   RecommendProductAction,
 } from "./recommendProductActions";
+import { API_SOURCE, UDEMY } from "../../helpers/constants"
 
 interface RecommendProductState {
   productList: any[];
@@ -17,13 +18,24 @@ const defaultState: RecommendProductState = {
   error: null,
 };
 
-export default (state = defaultState, action: RecommendProductAction) => {
+const reducer = (state = defaultState, action: RecommendProductAction) => {
   switch (action.type) {
     case FETCH_RECOMMEND_PRODUCT_START:
       return { ...state, loading: true };
 
     case FETCH_RECOMMEND_PRODUCT_SUCCESS:
-      return { ...state, loading: false, productList: action.payload.products };
+
+      let productData;
+      if (API_SOURCE === UDEMY) {
+        productData = action.payload
+      } else {
+        productData = action.payload.products
+      }
+      return {
+        ...state, loading: false,
+        productList:
+          productData
+      };
 
     case FETCH_RECOMMEND_PRODUCT_FAIL:
       return { ...state, loading: false, error: action.payload };
@@ -32,3 +44,5 @@ export default (state = defaultState, action: RecommendProductAction) => {
       return state;
   }
 };
+
+export default reducer;

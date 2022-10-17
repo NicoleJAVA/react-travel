@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 import { RootState } from "../../redux/store";
 import { giveMeDataActionCreator } from "../../redux/recommendProduct/recommendProductActions";
 import { MainLayout } from "../../layout/mainLayout";
+import { API_SOURCE, UDEMY } from "../../helpers/constants"
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -66,9 +67,21 @@ class HomePageComponent extends React.Component<PropsType> {
       return <div>網站發生錯誤： {error}</div>;
     }
 
-    const suggestProductList = productList;
-    const newProductList = productList;
-    const domesticProductList = productList;
+    let suggestProductList;
+    let newProductList;
+    let domesticProductList;
+    // -Udemy
+    if (API_SOURCE === UDEMY) {
+      suggestProductList = productList[0].touristRoutes;
+      newProductList = productList[1].touristRoutes;
+      domesticProductList = productList[2].touristRoutes;
+
+    } else {
+      // -Hexo 
+      suggestProductList = productList;
+      newProductList = productList;
+      domesticProductList = productList;
+    }
 
     return (
       <MainLayout>
