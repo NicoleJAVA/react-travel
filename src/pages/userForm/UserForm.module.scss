@@ -1,0 +1,71 @@
+@import "../../../src/scss/helpers/color";
+
+.full-container {
+  display: flex;
+  justify-content: center;
+}
+
+.form {
+  width: 700px;
+  min-height: 400px;
+  margin-top: 40px;
+  margin-bottom: 60px;
+  padding: 50px 30px 50px 30px;
+  background: $light-purple;
+}
+
+.form-title {
+  color: $purple;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.form-row {
+  display: flex;
+  margin-bottom: 30px;
+  font-size: 16px;
+  justify-content: space-between;
+}
+
+.form-left-col {
+  display: flex;
+  flex: 0 0 auto;
+  width: 20%;
+  margin-right: 20px;
+}
+
+.form-label {
+  width: 100%;
+  padding: 7px;
+  background: $middle-lavender;
+  color: white;
+}
+
+.form-right-col {
+  display: flex;
+  width: 75%;
+  align-items: center;
+  flex-direction: row-reverse;
+  flex: 0 0 auto;
+  color: $middle-lavender;
+}
+
+.form-input {
+  width: 100%;
+  border: 1px solid $purple;
+  border-radius: 8px;
+  padding: 5px 10px 5px 10px;
+}
+
+.submit-btn {
+  width: 100%;
+  background: $middle-lavender;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}

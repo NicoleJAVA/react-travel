@@ -13,6 +13,7 @@ import {
 import { Navigate } from "react-router-dom";
 import { useSelector, useAppDispatch } from "./redux/hooks";
 import { getShoppingCart } from "./redux/shoppingCart/slice";
+import { UserForm } from './pages/userForm/UserForm';
 
 const PrivateRoute = ({ children }) => {
   const jwt = useSelector((state) => state.user.token);
@@ -39,6 +40,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/detail/:touristRouteId" element={<DetailPage />} />
           <Route path="/search/:keyword" element={<SearchPage />} />
+          <Route path="/userForm" element={<UserForm />} />
           <Route
             path="/shoppingCart"
             element={
