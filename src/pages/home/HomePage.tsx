@@ -25,7 +25,7 @@ const isUdemy = API_SOURCE === UDEMY;
 const mapStateToProps = (state: RootState) => {
   return {
     loading: state.recommendProduct.loading,
-    productList: state.recommendProduct.productList,
+    allProducts: state.recommendProduct.allProducts,
     categoryList: state.recommendProduct.categoryList, // todo
     cateProducts: state.recommendProduct.cateProducts,
     error: state.recommendProduct.error,
@@ -50,7 +50,7 @@ class HomePageComponent extends React.Component<PropsType> {
   }
 
   render() {
-    const { t, productList, cateProducts, categoryList, loading, error } = this.props;
+    const { t, allProducts, cateProducts, categoryList, loading, error } = this.props;
     // console.log("列印對照表", categoryList);//  todo
     console.log("列印分類過產品表", cateProducts);//  todo
     if (loading) {
@@ -78,13 +78,13 @@ class HomePageComponent extends React.Component<PropsType> {
     let domesticProductList;
     // -Udemy
     if (API_SOURCE === UDEMY) {
-      suggestProductList = productList[0].touristRoutes;
-      newProductList = productList[1].touristRoutes;
-      domesticProductList = productList[2].touristRoutes;
+      suggestProductList = allProducts[0].touristRoutes;
+      newProductList = allProducts[1].touristRoutes;
+      domesticProductList = allProducts[2].touristRoutes;
 
     } else {
       // -Hexo 
-      currProductList = productList;
+      currProductList = allProducts;
     }
 
     const showCategory = (categoryKey) => {

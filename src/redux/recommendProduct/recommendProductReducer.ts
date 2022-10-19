@@ -8,7 +8,7 @@ import { API_SOURCE, UDEMY } from "../../helpers/constants"
 import categoryName from "../../assets/strings/category-zh_tw.json"
 
 interface RecommendProductState {
-  productList: any[];
+  allProducts: any[];
   categoryList: any[]; // todo
   cateProducts: any[];
   loading: boolean;
@@ -16,7 +16,7 @@ interface RecommendProductState {
 }
 
 const defaultState: RecommendProductState = {
-  productList: [],
+  allProducts: [],
   categoryList: [], // todo
   cateProducts: [],
   loading: true,
@@ -30,15 +30,15 @@ const reducer = (state = defaultState, action: RecommendProductAction) => {
 
     case FETCH_RECOMMEND_PRODUCT_SUCCESS:
 
-      let productData;
+      let allProducts;
       let cateProductList: any[] = [];
       let categoryList: string[] = []; // todo
       if (API_SOURCE === UDEMY) {
-        productData = action.payload
+        allProducts = action.payload
       } else {
         console.log("\n -. -. 查看 payload", action.payload)// todo
-        productData = action.payload.products
-        productData.forEach(item => {
+        allProducts = action.payload.products
+        allProducts.forEach(item => {
           console.log("------------\n類別 ", item.category);  //todo
           if (!(categoryList.includes(item.category))) {
             categoryList.push(item.category);
@@ -73,8 +73,8 @@ const reducer = (state = defaultState, action: RecommendProductAction) => {
       // END
       return {
         ...state, loading: false,
-        productList:
-          productData,
+        allProducts:
+          allProducts,
         cateProducts: cateProductList,
         categoryList: categoryList,// todo
       };
