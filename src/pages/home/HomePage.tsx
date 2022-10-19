@@ -26,7 +26,7 @@ const mapStateToProps = (state: RootState) => {
   return {
     loading: state.recommendProduct.loading,
     allProducts: state.recommendProduct.allProducts,
-    categoryList: state.recommendProduct.categoryList, // todo
+    categoryList: state.recommendProduct.categoryList,
     cateProducts: state.recommendProduct.cateProducts,
     error: state.recommendProduct.error,
   };
@@ -42,17 +42,25 @@ const mapDispatchToProps = (dispatch) => {
 
 type PropsType = WithTranslation &
   ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+  ReturnType<typeof mapDispatchToProps>
+  ;
 
-class HomePageComponent extends React.Component<PropsType> {
+interface IProps {
+  currProducts: any[];
+}
+
+class HomePageComponent extends React.Component<PropsType, IProps> {
+  constructor(props) {
+    super(props);
+    this.state = { currProducts: [] };
+  }
+
   componentDidMount() {
     this.props.giveMeData();
   }
 
   render() {
     const { t, allProducts, cateProducts, categoryList, loading, error } = this.props;
-    // console.log("列印對照表", categoryList);//  todo
-    console.log("列印分類過產品表", cateProducts);//  todo
     if (loading) {
       return (
         <Spin
@@ -72,7 +80,6 @@ class HomePageComponent extends React.Component<PropsType> {
       return <div>網站發生錯誤： {error}</div>;
     }
 
-    let currProductList;
     let suggestProductList;
     let newProductList;
     let domesticProductList;
@@ -84,23 +91,17 @@ class HomePageComponent extends React.Component<PropsType> {
 
     } else {
       // -Hexo 
-      currProductList = allProducts;
     }
 
     const showCategory = (categoryKey) => {
-
-      currProductList = cateProducts.find(x => x.category === categoryKey);
-      console.log("\n 點擊類別, ", categoryKey, currProductList)// todo
-
+      this.setState(
+        {
+          currProducts:
+            cateProducts.find(x => x.category === categoryKey).data
+        });
     }
 
     const test = () => {
-      // This has nothing to do with react, it's simply that on the inside 
-      // array is still an instance of an object and can have it's properties 
-      // modified the same way, without actually adding them to the iterable options.
-
-
-      console.log("TEST", cateProducts, Array.isArray(cateProducts), cateProducts['stb'], cateProducts.length); // todo
     }
 
     return (
@@ -108,7 +109,6 @@ class HomePageComponent extends React.Component<PropsType> {
         <Row className={styles["row"]}>
           <Col span={6}>
             <ul>
-              <a onClick={() => { test() }}>點擊測試</a>
               商品類別
               {categoryList && categoryList.map((item, i) => {
                 return <li key={i}>
@@ -130,8 +130,9 @@ class HomePageComponent extends React.Component<PropsType> {
             </Typography.Title>
           }
           sideImage={suggestProductImg}
-          products={currProductList}
+          products={this.state.currProducts}
         />
+        {/* <a onClick={() => { test() }}>click to test</a> */}
         {isUdemy && <ProductCollection
           title={
             <Typography.Title level={3} className={theme["text-theme"]}>
