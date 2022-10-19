@@ -122,6 +122,22 @@ export const deleteShoppingCartItems = createAsyncThunk(
 //   }
 // );
 
+export const applyCoupon = createAsyncThunk(
+  "shoppingCart/applyCoupon",
+  async (parameters: { couponCode: string }, thunkAPI) => {
+    const { data } = await axios.post(
+      `${API_BASE}/coupon`,
+      {
+        data: {
+          code: parameters.couponCode,
+        },
+      },
+    );
+
+    return data;
+  }
+);
+
 export const shoppingCartSlice = createSlice({
   name: "shoppingCart",
   initialState,
@@ -223,6 +239,21 @@ export const shoppingCartSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    // apply coupon code:
+    [applyCoupon.pending.type]: (state) => {
+      state.loading = true;
+    },
+    [applyCoupon.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.error = null;
+    },
+    [applyCoupon.rejected.type]: (
+      state,
+      action: PayloadAction<string | null>
+    ) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -239,6 +270,15 @@ export const updateCartMiddleware = createListenerMiddleware();
 
 updateCartMiddleware.startListening({
   actionCreator: updateCart.fulfilled,
+  effect: (_, { dispatch, unsubscribe }) => {
+    dispatch(getShoppingCart(""));
+  },
+});
+
+export const applyCouponMiddleware = createListenerMiddleware();
+
+applyCouponMiddleware.startListening({
+  actionCreator: applyCoupon.fulfilled,
   effect: (_, { dispatch, unsubscribe }) => {
     dispatch(getShoppingCart(""));
   },

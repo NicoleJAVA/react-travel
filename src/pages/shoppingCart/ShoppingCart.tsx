@@ -8,6 +8,7 @@ import { useState } from "react";
 import {
   updateCart,
   deleteShoppingCartItems,
+  applyCoupon
 } from "../../redux/shoppingCart/slice";
 import { useNavigate } from "react-router-dom";
 import { API_SOURCE, UDEMY } from '../../helpers/constants';
@@ -49,9 +50,8 @@ export const ShoppingCart: React.FC = () => {
     setCouponCode(e.target.value);
   }
 
-  const applyCouponCode = () => {
-    // todo
-
+  const onApplyCoupon = () => {
+    dispatch(applyCoupon({ couponCode: couponCode }));
   }
 
   const jwt = useSelector((s) => s.user.token);
@@ -144,7 +144,7 @@ export const ShoppingCart: React.FC = () => {
                   <input type="text" className={styles["coupon-input"]} placeholder="請輸入優惠碼" onChange={updateCouponCode} />
                 </div>
                 <div className={styles["checkout-right-col"]}>
-                  <div className={styles["coupon-btn"]} onClick={() => applyCouponCode()}>套用優惠碼</div>
+                  <div className={styles["coupon-btn"]} onClick={() => onApplyCoupon()}>套用優惠碼</div>
                 </div>
               </div>
             </div>
