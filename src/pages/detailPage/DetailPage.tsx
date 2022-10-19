@@ -15,7 +15,7 @@ import {
 import { useSelector, useAppDispatch } from "../../redux/hooks";
 import { useDispatch } from "react-redux";
 import { MainLayout } from "../../layout/mainLayout";
-import { addShoppingCartItem } from "../../redux/shoppingCart/slice";
+import { addToCartUdemy } from "../../redux/shoppingCart/slice";
 
 const { RangePicker } = DatePicker;
 
@@ -93,7 +93,7 @@ export const DetailPage: React.FC = () => {
                 loading={shoppingCartLoading}
                 onClick={() => {
                   dispatch(
-                    addShoppingCartItem({ jwt, touristRouteId: product.id })
+                    addToCartUdemy({ jwt, touristRouteId: product.id })
                   );
                 }}
               >

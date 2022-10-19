@@ -15,7 +15,7 @@ import storage from "redux-persist/lib/storage";
 import { productDetailSlice } from "./productDetail/slice";
 import { searchSlice } from "./search/slice";
 import { userSlice } from "./user/slice";
-import { shoppingCartSlice, updateCartMiddleware } from "./shoppingCart/slice";
+import { shoppingCartSlice, updateCartMiddleware, addToCartMiddleware } from "./shoppingCart/slice";
 import { orderSlice, payOrderMiddleware } from "./order/slice";
 
 const persistConfig = {
@@ -45,7 +45,8 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     }).concat(actionLog).concat(updateCartMiddleware.middleware)
-      .concat(payOrderMiddleware.middleware),
+      .concat(payOrderMiddleware.middleware)
+      .concat(addToCartMiddleware.middleware),
   devTools: true,
 });
 

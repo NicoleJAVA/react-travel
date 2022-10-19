@@ -35,8 +35,8 @@ export const getShoppingCart = createAsyncThunk(
   }
 );
 
-export const addShoppingCartItem = createAsyncThunk(
-  "shoppingCart/addShoppingCartItem",
+export const addToCartUdemy = createAsyncThunk(
+  "shoppingCart/addToCartUdemy",
   async (parameters: { jwt: string; touristRouteId: string }, thunkAPI) => {
     const { data } = await axios.post(
       `${API_BASE}/api/shoppingCart/items`,
@@ -52,6 +52,23 @@ export const addShoppingCartItem = createAsyncThunk(
     );
 
     return data.shoppingCartItems;
+  }
+);
+
+export const addToCart = createAsyncThunk(
+  "shoppingCart/addToCart",
+  async (parameters: { productId: string; }, thunkAPI) => {
+    const { data } = await axios.post(
+      `${API_BASE}/cart`,
+      {
+        data: {
+          product_id: parameters.productId,
+          qty: 1,
+        },
+      },
+    );
+
+    return data;
   }
 );
 
@@ -127,16 +144,32 @@ export const shoppingCartSlice = createSlice({
       state.error = action.payload;
     },
 
-    // add shopping cart item:
-    [addShoppingCartItem.pending.type]: (state) => {
+    // Udemy Version: add shopping cart item:
+    [addToCartUdemy.pending.type]: (state) => {
       state.loading = true;
     },
-    [addShoppingCartItem.fulfilled.type]: (state, action) => {
+    [addToCartUdemy.fulfilled.type]: (state, action) => {
       state.loading = false;
       state.items = action.payload;
       state.error = null;
     },
-    [addShoppingCartItem.rejected.type]: (
+    [addToCartUdemy.rejected.type]: (
+      state,
+      action: PayloadAction<string | null>
+    ) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    // Hexo Version: add shopping cart item:
+    [addToCart.pending.type]: (state) => {
+      state.loading = true;
+    },
+    [addToCart.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.error = null;
+    },
+    [addToCart.rejected.type]: (
       state,
       action: PayloadAction<string | null>
     ) => {
@@ -190,6 +223,15 @@ export const shoppingCartSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+  },
+});
+
+export const addToCartMiddleware = createListenerMiddleware();
+
+addToCartMiddleware.startListening({
+  actionCreator: addToCart.fulfilled,
+  effect: (_, { dispatch, unsubscribe }) => {
+    dispatch(getShoppingCart(""));
   },
 });
 

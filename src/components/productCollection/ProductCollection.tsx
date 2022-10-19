@@ -6,6 +6,7 @@ import { ProductImage } from "./ProductImage";
 import { API_SOURCE, UDEMY } from '../../helpers/constants';
 import { ShoppingCartOutlined, HeartOutlined, ShareAltOutlined } from '@ant-design/icons';
 import { useAppDispatch, useSelector } from "../../redux/hooks";
+import { addToCart } from '../../redux/shoppingCart/slice';
 interface PropsType {
   title: JSX.Element;
   sideImage: string;
@@ -23,6 +24,7 @@ export const ProductCollection: React.FC<PropsType> = ({
   const imgStyle = { "--w": 276, "--h": 230 } as React.CSSProperties;
 
   const onAddToCart = (product) => {
+    dispatch(addToCart({ productId: product.id }));
   }
 
   return (
