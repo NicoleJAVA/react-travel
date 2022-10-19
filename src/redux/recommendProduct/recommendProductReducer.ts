@@ -2,6 +2,7 @@ import {
   FETCH_RECOMMEND_PRODUCT_FAIL,
   FETCH_RECOMMEND_PRODUCT_START,
   FETCH_RECOMMEND_PRODUCT_SUCCESS,
+  CHANGE_CATEGORY,
   RecommendProductAction,
 } from "./recommendProductActions";
 import { API_SOURCE, UDEMY } from "../../helpers/constants"
@@ -11,6 +12,7 @@ interface RecommendProductState {
   allProducts: any[];
   categoryList: any[];
   cateProducts: any[];
+  currProducts: any[];
   loading: boolean;
   error: string | null;
 }
@@ -19,6 +21,7 @@ const defaultState: RecommendProductState = {
   allProducts: [],
   categoryList: [],
   cateProducts: [],
+  currProducts: [],
   loading: true,
   error: null,
 };
@@ -36,26 +39,25 @@ const reducer = (state = defaultState, action: RecommendProductAction) => {
 
       if (API_SOURCE === UDEMY) {
         allProducts = action.payload
-        return;
+
+      } else {
+        allProducts = action.payload.products
+        allProducts.forEach(item => {
+          if (!(categoryList.includes(item.category))) {
+            categoryList.push(item.category);
+            const cateName = categoryName[item.category];
+            const newData = {
+              name: cateName,
+              category: item.category,
+              data: [item]
+            };
+            cateProductList.push(newData);
+          } else {
+            cateProductList.find(x => x.category === item.category)
+              .data.push(item);
+          }
+        });
       }
-
-      allProducts = action.payload.products
-      allProducts.forEach(item => {
-        if (!(categoryList.includes(item.category))) {
-          categoryList.push(item.category);
-          const cateName = categoryName[item.category];
-          const newData = {
-            name: cateName,
-            category: item.category,
-            data: [item]
-          };
-          cateProductList.push(newData);
-        } else {
-          cateProductList.find(x => x.category === item.category)
-            .data.push(item);
-        }
-      });
-
 
       return {
         ...state,
@@ -63,10 +65,20 @@ const reducer = (state = defaultState, action: RecommendProductAction) => {
         allProducts: allProducts,
         cateProducts: cateProductList,
         categoryList: categoryList,
+        currProducts: allProducts,
       };
 
     case FETCH_RECOMMEND_PRODUCT_FAIL:
       return { ...state, loading: false, error: action.payload };
+
+    case CHANGE_CATEGORY:
+      const data = state.cateProducts
+        .find(x => x.category === action.payload).data;
+
+      return {
+        ...state,
+        currProducts: data,
+      };
 
     default:
       return state;

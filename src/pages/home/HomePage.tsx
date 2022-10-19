@@ -13,10 +13,12 @@ import suggestProductImg from "../../assets/img/suggest_products.png";
 import newProductImg from "../../assets/img/new_products.png";
 import domesticProductImg from "../../assets/img/domestic_products.png";
 import { withTranslation, WithTranslation } from "react-i18next";
-import axios from "axios";
 import { connect } from "react-redux";
 import { RootState } from "../../redux/store";
-import { giveMeDataActionCreator } from "../../redux/recommendProduct/recommendProductActions";
+import {
+  giveMeDataActionCreator,
+  ChangeCategoryActionCreator
+} from "../../redux/recommendProduct/recommendProductActions";
 import { MainLayout } from "../../layout/mainLayout";
 import { API_SOURCE, UDEMY } from "../../helpers/constants"
 
@@ -28,6 +30,7 @@ const mapStateToProps = (state: RootState) => {
     allProducts: state.recommendProduct.allProducts,
     categoryList: state.recommendProduct.categoryList,
     cateProducts: state.recommendProduct.cateProducts,
+    currProducts: state.recommendProduct.currProducts,
     error: state.recommendProduct.error,
   };
 };
@@ -37,30 +40,27 @@ const mapDispatchToProps = (dispatch) => {
     giveMeData: () => {
       dispatch(giveMeDataActionCreator());
     },
+    changeCategory: (categoryKey) => {
+      dispatch(ChangeCategoryActionCreator(categoryKey));
+    }
   };
 };
 
 type PropsType = WithTranslation &
   ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>
-  ;
+  ReturnType<typeof mapDispatchToProps>;
+// interface IProps {
+//   currProducts: any[];
+// }
 
-interface IProps {
-  currProducts: any[];
-}
-
-class HomePageComponent extends React.Component<PropsType, IProps> {
-  constructor(props) {
-    super(props);
-    this.state = { currProducts: [] };
-  }
-
+class HomePageComponent extends React.Component<PropsType> {
   componentDidMount() {
     this.props.giveMeData();
   }
 
+
   render() {
-    const { t, allProducts, cateProducts, categoryList, loading, error } = this.props;
+    const { t, allProducts, cateProducts, currProducts, categoryList, loading, error } = this.props;
     if (loading) {
       return (
         <Spin
@@ -83,26 +83,18 @@ class HomePageComponent extends React.Component<PropsType, IProps> {
     let suggestProductList;
     let newProductList;
     let domesticProductList;
+
     // -Udemy
     if (API_SOURCE === UDEMY) {
       suggestProductList = allProducts[0].touristRoutes;
       newProductList = allProducts[1].touristRoutes;
       domesticProductList = allProducts[2].touristRoutes;
-
-    } else {
-      // -Hexo 
     }
 
     const showCategory = (categoryKey) => {
-      this.setState(
-        {
-          currProducts:
-            cateProducts.find(x => x.category === categoryKey).data
-        });
+      this.props.changeCategory(categoryKey);
     }
 
-    const test = () => {
-    }
 
     return (
       <MainLayout>
@@ -123,15 +115,15 @@ class HomePageComponent extends React.Component<PropsType, IProps> {
             {/* <Carousel /> */}
           </Col>
         </Row>
-        <ProductCollection
+        {currProducts && <ProductCollection
           title={
             <Typography.Title level={3} className={theme["text-theme"]}>
               {t("home_page.hot_recommended")}
             </Typography.Title>
           }
           sideImage={suggestProductImg}
-          products={this.state.currProducts}
-        />
+          products={currProducts}
+        />}
         {/* <a onClick={() => { test() }}>click to test</a> */}
         {isUdemy && <ProductCollection
           title={

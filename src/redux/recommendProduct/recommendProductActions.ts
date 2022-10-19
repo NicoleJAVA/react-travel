@@ -8,6 +8,7 @@ export const FETCH_RECOMMEND_PRODUCT_START = "FETCH_RECOMMEND_PRODUCT_START";
 export const FETCH_RECOMMEND_PRODUCT_SUCCESS =
   "FETCH_RECOMMEND_PRODUCT_SUCCESS";
 export const FETCH_RECOMMEND_PRODUCT_FAIL = "FETCH_RECOMMEND_PRODUCT_FAIL";
+export const CHANGE_CATEGORY = "CHANGE_CATEGORY";
 
 const isUdemy = API_SOURCE === UDEMY;
 
@@ -25,10 +26,16 @@ interface FetchRecommendProductFailAction {
   payload: any;
 }
 
+interface ChangeCategoryAction {
+  type: typeof CHANGE_CATEGORY;
+  payload: any;
+}
+
 export type RecommendProductAction =
   | FetchRecommendProductStartAction
   | FetchRecommendProductSuccessAction
-  | FetchRecommendProductFailAction;
+  | FetchRecommendProductFailAction
+  | ChangeCategoryAction;
 
 export const fetchRecommendProductStartActionCreator =
   (): FetchRecommendProductStartAction => {
@@ -70,3 +77,12 @@ export const giveMeDataActionCreator =
         }
       }
     };
+
+export const ChangeCategoryActionCreator = (
+  data
+): ChangeCategoryAction => {
+  return {
+    type: CHANGE_CATEGORY,
+    payload: data,
+  };
+};
