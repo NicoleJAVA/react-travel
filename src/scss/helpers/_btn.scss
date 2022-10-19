@@ -1,0 +1,15 @@
+@import "../../../src/scss/helpers/color";
+
+$icon-width-height: 32px;
+$icon-border-radius: 3px;
+
+.btn-icon {
+  background: $violet;
+  width: $icon-width-height;
+  height: $icon-width-height;
+  color: white;
+  border-radius: $icon-border-radius;
+  text-align: center;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}

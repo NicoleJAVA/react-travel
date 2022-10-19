@@ -1,8 +1,11 @@
 import React from "react";
 import styles from "./ProductCollection.module.scss";
-import { Row, Col, Typography, Divider } from "antd";
+import theme from "../../Theme.module.scss";
+import { Row, Col, Spin, Divider, } from "antd";
 import { ProductImage } from "./ProductImage";
 import { API_SOURCE, UDEMY } from '../../helpers/constants';
+import { ShoppingCartOutlined, HeartOutlined, ShareAltOutlined } from '@ant-design/icons';
+import { useAppDispatch, useSelector } from "../../redux/hooks";
 interface PropsType {
   title: JSX.Element;
   sideImage: string;
@@ -15,54 +18,76 @@ export const ProductCollection: React.FC<PropsType> = ({
   products,
 }) => {
   const isUdemy = API_SOURCE === UDEMY;
+  const loading = useSelector((s) => s.shoppingCart.loading);
+  const dispatch = useAppDispatch();
+  const imgStyle = { "--w": 276, "--h": 230 } as React.CSSProperties;
+
+  const onAddToCart = (product) => {
+  }
 
   return (
     <div className={styles["content"]}>
-      <Divider orientation="left">{title}</Divider>
-      <Row>
-        <Col span={4}>
-          <img
-            src={sideImage}
-            alt="side image"
-            className={styles["side-image"]}
-          />
-        </Col>
-        <Col span={20}>
-          {/* the first row */}
-          {<Row>
-            {
-              [0, 1, 2].map((product, i) => (
-                <Col span={12}>
-                  <ProductImage
-                    id={products[i].id}
-                    size="small"
-                    title={products[i].title}
-                    // imageSrc={products[i].imageUrl}
-                    imageSrc={isUdemy ? products[i].touristRoutePictures[0].url : products[i].imageUrl}
-                    price={products[i].price}
-                  />
-                </Col>
-              ))
-            }
+      <Spin spinning={loading}>
+        <Divider orientation="left">{title}</Divider>
+        <Row>
+          <Col span={4}>
+            {/* <img
+              src={sideImage}
+              alt="side image"
+              className={styles["side-image"]}
+            /> */}
+          </Col>
+          <Col span={20}>
+            {/* the first row */}
+            {<Row>
+              {
+                products.map((product, i) => (
+                  <>
+                    <div className={styles["product-card"]} >
+                      <div className={theme["ratio-wrap"]} style={imgStyle}>
 
-          </Row>}
-          {/* the second row */}
-          {
-            [0, 1, 2].map((product, i) => (
-              <Col span={12}>
-                <ProductImage
-                  id={products[i + 3].id}
-                  size="small"
-                  title={products[i + 3].title}
-                  imageSrc={isUdemy ? products[i + 3].touristRoutePictures[0].url : products[i].imageUrl}
-                  // imageSrc={products[i + 3].imageUrl}
-                  price={products[i + 3].price}
-                />
-              </Col>
-            ))
-          }
-        </Col>
-      </Row>
-    </div>
+                        <img className={`${theme["ratio"]} ${styles[""]}`}
+                          src={isUdemy ? products[i].touristRoutePictures[0].url : products[i].imageUrl} />
+                      </div>
+                      <div>
+                        <h3
+                          className={`${theme["break-line-2"]} ${styles["product-title"]}`}
+
+                        >
+                          {products[i].title}
+                        </h3>
+                      </div >
+                      <div className={`${styles["price-container"]}`}>
+                        <span className={`${theme["text-theme"]}`}>NTD</span>
+                        <span className={`${styles["product-price"]}`}>$ {products[i].price}</span>
+                        <span className={`${theme["text-delete"]}`}>NTD $ {products[i].origin_price}</span>
+                      </div>
+                      <div className={`${styles["buttons-container"]}`}>
+                        <div className={`${theme["btn-icon"]} ${styles["product-btn"]}`}
+                          onClick={() => onAddToCart(products[i])}
+                        >
+                          <ShoppingCartOutlined />
+                          {/* <i class="bi bi-cart "></i> */}
+                        </div>
+                        <div className={`${theme["btn-icon"]} ${styles["product-btn"]}`} >
+                          <HeartOutlined />
+                          {/* <i className="bi bi-heart"></i> */}
+                        </div>
+                        <div className={`${theme["btn-icon"]} ${styles["product-btn"]}`} >
+                          <ShareAltOutlined />
+                          {/* <i className="bi bi-share"></i> */}
+                        </div>
+                      </div>
+                    </div>
+
+                  </>
+                ))
+              }
+
+            </Row>}
+          </Col>
+        </Row >
+      </Spin>
+    </div >
   );
 };

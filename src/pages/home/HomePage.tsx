@@ -20,6 +20,8 @@ import { giveMeDataActionCreator } from "../../redux/recommendProduct/recommendP
 import { MainLayout } from "../../layout/mainLayout";
 import { API_SOURCE, UDEMY } from "../../helpers/constants"
 
+const isUdemy = API_SOURCE === UDEMY;
+
 const mapStateToProps = (state: RootState) => {
   return {
     loading: state.recommendProduct.loading,
@@ -102,7 +104,7 @@ class HomePageComponent extends React.Component<PropsType> {
           sideImage={suggestProductImg}
           products={suggestProductList}
         />
-        <ProductCollection
+        {isUdemy && <ProductCollection
           title={
             <Typography.Title level={3} className={theme["text-theme"]}>
               {t("home_page.new_arrival")}
@@ -110,8 +112,8 @@ class HomePageComponent extends React.Component<PropsType> {
           }
           sideImage={newProductImg}
           products={newProductList}
-        />
-        <ProductCollection
+        />}
+        {isUdemy && <ProductCollection
           title={
             <Typography.Title level={3} className={theme["text-theme"]}>
               {t("home_page.domestic_travel")}
@@ -119,7 +121,7 @@ class HomePageComponent extends React.Component<PropsType> {
           }
           sideImage={domesticProductImg}
           products={domesticProductList}
-        />
+        />}
       </MainLayout>
     );
   }
