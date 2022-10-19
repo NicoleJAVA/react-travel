@@ -26,6 +26,8 @@ const mapStateToProps = (state: RootState) => {
   return {
     loading: state.recommendProduct.loading,
     productList: state.recommendProduct.productList,
+    categoryList: state.recommendProduct.categoryList, // todo
+    cateProducts: state.recommendProduct.cateProducts,
     error: state.recommendProduct.error,
   };
 };
@@ -48,8 +50,9 @@ class HomePageComponent extends React.Component<PropsType> {
   }
 
   render() {
-    const { t, productList, loading, error } = this.props;
-
+    const { t, productList, cateProducts, categoryList, loading, error } = this.props;
+    // console.log("列印對照表", categoryList);//  todo
+    console.log("列印分類過產品表", cateProducts);//  todo
     if (loading) {
       return (
         <Spin
@@ -69,6 +72,7 @@ class HomePageComponent extends React.Component<PropsType> {
       return <div>網站發生錯誤： {error}</div>;
     }
 
+    let currProductList;
     let suggestProductList;
     let newProductList;
     let domesticProductList;
@@ -80,16 +84,40 @@ class HomePageComponent extends React.Component<PropsType> {
 
     } else {
       // -Hexo 
-      suggestProductList = productList;
-      newProductList = productList;
-      domesticProductList = productList;
+      currProductList = productList;
+    }
+
+    const showCategory = (categoryKey) => {
+
+      currProductList = cateProducts.find(x => x.category === categoryKey);
+      console.log("\n 點擊類別, ", categoryKey, currProductList)// todo
+
+    }
+
+    const test = () => {
+      // This has nothing to do with react, it's simply that on the inside 
+      // array is still an instance of an object and can have it's properties 
+      // modified the same way, without actually adding them to the iterable options.
+
+
+      console.log("TEST", cateProducts, Array.isArray(cateProducts), cateProducts['stb'], cateProducts.length); // todo
     }
 
     return (
       <MainLayout>
         <Row className={styles["row"]}>
           <Col span={6}>
-            <SideMenu />
+            <ul>
+              <a onClick={() => { test() }}>點擊測試</a>
+              商品類別
+              {categoryList && categoryList.map((item, i) => {
+                return <li key={i}>
+                  <a href="#" onClick={() => showCategory(item)}>
+                    {item}
+                  </a>
+                </li>
+              })}
+            </ul>
           </Col>
           <Col span={18}>
             {/* <Carousel /> */}
@@ -102,7 +130,7 @@ class HomePageComponent extends React.Component<PropsType> {
             </Typography.Title>
           }
           sideImage={suggestProductImg}
-          products={suggestProductList}
+          products={currProductList}
         />
         {isUdemy && <ProductCollection
           title={

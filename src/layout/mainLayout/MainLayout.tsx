@@ -10,7 +10,7 @@ interface PropsType {
 export const MainLayout: React.FC<PropsType> = ({ children }) => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className={styles["content-box"]}>{children}</div>
       <Footer />
     </>

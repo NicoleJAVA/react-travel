@@ -26,11 +26,11 @@ function App() {
   const jwt = useSelector((state) => state.user.token);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (jwt) {
-      dispatch(getShoppingCart(jwt));
-    }
-  }, [jwt]);
+  // useEffect(() => {
+  //   if (jwt) {
+  //     dispatch(getShoppingCart(jwt));
+  //   }
+  // }, [jwt]);
 
   return (
     <div>
