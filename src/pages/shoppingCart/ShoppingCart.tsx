@@ -26,11 +26,21 @@ export const ShoppingCart: React.FC = () => {
     shoppingCartItems = shoppingCart.carts;
   }
 
-  const onUpdateCart = (cart) => {
+  const onCartPlus = (cart) => {
+    onUpdateCart(cart, cart.qty + 1);
+  }
+
+  const onCartMinus = (cart) => {
+    if (cart.qty <= 1) return;
+
+    onUpdateCart(cart, cart.qty - 1);
+  }
+
+  const onUpdateCart = (cart, quantity) => {
     const cartData = {
       cartId: cart.id,
       productId: cart.product.id,
-      qty: cart.qty + 1,
+      qty: quantity,
     }
     dispatch(updateCart(cartData));
   }
@@ -72,10 +82,10 @@ export const ShoppingCart: React.FC = () => {
                             數量： {item.qty}
                           </div>
                           <div className={styles["cart-item-qty-buttons"]}>
-                            <div className={styles["left-rounded"]}>
+                            <div className={styles["left-rounded"]} onClick={() => onCartMinus(item)}>
                               -
                             </div>
-                            <div className={styles["right-rounded"]} onClick={() => onUpdateCart(item)}>
+                            <div className={styles["right-rounded"]} onClick={() => onCartPlus(item)}>
                               +
                             </div>
                           </div>
