@@ -20,7 +20,8 @@ import {
   ChangeCategoryActionCreator
 } from "../../redux/recommendProduct/recommendProductActions";
 import { MainLayout } from "../../layout/mainLayout";
-import { API_SOURCE, UDEMY } from "../../helpers/constants"
+import { API_SOURCE, UDEMY } from "../../helpers/constants";
+import categoryName from "../../assets/strings/category-zh_tw.json"
 
 const isUdemy = API_SOURCE === UDEMY;
 
@@ -100,16 +101,17 @@ class HomePageComponent extends React.Component<PropsType> {
       <MainLayout>
         <Row className={styles["row"]}>
           <Col span={6}>
-            <ul>
-              商品類別
-              {categoryList && categoryList.map((item, i) => {
-                return <li key={i}>
-                  <a href="#" onClick={() => showCategory(item)}>
-                    {item}
-                  </a>
-                </li>
-              })}
-            </ul>
+
+            <div className={`${styles["categry-tab"]}`}><b>商品類別</b></div>
+            {categoryList && categoryList.map((item, i) => {
+              return <div key={i} className={`${styles["categry-tab"]}`} >
+                <a href="#" onClick={() => showCategory(item)}
+                  className={`${theme["link-transition"]} ${styles[""]}`}>
+                  {categoryName[item]}
+                </a>
+              </div>
+            })}
+
           </Col>
           <Col span={18}>
             {/* <Carousel /> */}
@@ -117,9 +119,10 @@ class HomePageComponent extends React.Component<PropsType> {
         </Row>
         {currProducts && <ProductCollection
           title={
-            <Typography.Title level={3} className={theme["text-theme"]}>
-              {t("home_page.hot_recommended")}
-            </Typography.Title>
+            <></>
+            // <Typography.Title level={3} className={theme["text-theme"]}>
+            //   {t("home_page.hot_recommended")}
+            // </Typography.Title>
           }
           sideImage={suggestProductImg}
           products={currProducts}

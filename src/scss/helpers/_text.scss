@@ -110,3 +110,12 @@ $font-size-md: 14px;
 .break-line-2 {
   @include break-line(2);
 }
+
+.link-transition {
+  color: $theme-color;
+  transition: 0.4s;
+}
+
+.link-transition:hover {
+  color: $middle-lavender;
+}
