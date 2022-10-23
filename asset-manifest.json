@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/react-travel/static/css/main.c4f5207c.css",
-    "main.js": "/react-travel/static/js/main.3af613ea.js",
+    "main.css": "/react-travel/static/css/main.e0d81781.css",
+    "main.js": "/react-travel/static/js/main.4dc0a55d.js",
     "static/media/carousel_3.jpg": "/react-travel/static/media/carousel_3.39c09c7100584146487d.jpg",
     "static/media/new_products.png": "/react-travel/static/media/new_products.600e70c8481a31451832.png",
     "static/media/carousel_2.jpg": "/react-travel/static/media/carousel_2.b79314aaa2a9db2d5fc0.jpg",
@@ -9,11 +9,11 @@
     "static/media/domestic_products.png": "/react-travel/static/media/domestic_products.e8593237f5561ecd07bc.png",
     "static/media/carousel_1.jpg": "/react-travel/static/media/carousel_1.8a3dd5919c9be2269384.jpg",
     "index.html": "/react-travel/index.html",
-    "main.c4f5207c.css.map": "/react-travel/static/css/main.c4f5207c.css.map",
-    "main.3af613ea.js.map": "/react-travel/static/js/main.3af613ea.js.map"
+    "main.e0d81781.css.map": "/react-travel/static/css/main.e0d81781.css.map",
+    "main.4dc0a55d.js.map": "/react-travel/static/js/main.4dc0a55d.js.map"
   },
   "entrypoints": [
-    "static/css/main.c4f5207c.css",
-    "static/js/main.3af613ea.js"
+    "static/css/main.e0d81781.css",
+    "static/js/main.4dc0a55d.js"
   ]
 }
