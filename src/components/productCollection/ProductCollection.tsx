@@ -14,7 +14,7 @@ interface PropsType {
 }
 
 export const ProductCollection: React.FC<PropsType> = ({
-  title,
+  // title,
   sideImage,
   products,
 }) => {
@@ -30,16 +30,8 @@ export const ProductCollection: React.FC<PropsType> = ({
   return (
     <div className={styles["content"]}>
       <Spin spinning={loading}>
-        <Divider orientation="left">{title}</Divider>
         <Row>
-          <Col span={4}>
-            {/* <img
-              src={sideImage}
-              alt="side image"
-              className={styles["side-image"]}
-            /> */}
-          </Col>
-          <Col span={20}>
+          <Col span={24}>
             {/* the first row */}
             {<Row>
               {

@@ -100,7 +100,7 @@ class HomePageComponent extends React.Component<PropsType> {
     return (
       <MainLayout>
         <Row className={styles["row"]}>
-          <Col span={6}>
+          <Col span={4}>
 
             <div className={`${styles["categry-tab"]}`}><b>商品類別</b></div>
             {categoryList && categoryList.map((item, i) => {
@@ -113,20 +113,20 @@ class HomePageComponent extends React.Component<PropsType> {
             })}
 
           </Col>
-          <Col span={18}>
+          <Col span={20}>
             {/* <Carousel /> */}
+            {currProducts && <ProductCollection
+              title={
+                <></>
+                // <Typography.Title level={3} className={theme["text-theme"]}>
+                //   {t("home_page.hot_recommended")}
+                // </Typography.Title>
+              }
+              sideImage={suggestProductImg}
+              products={currProducts}
+            />}
           </Col>
         </Row>
-        {currProducts && <ProductCollection
-          title={
-            <></>
-            // <Typography.Title level={3} className={theme["text-theme"]}>
-            //   {t("home_page.hot_recommended")}
-            // </Typography.Title>
-          }
-          sideImage={suggestProductImg}
-          products={currProducts}
-        />}
         {/* <a onClick={() => { test() }}>click to test</a> */}
         {isUdemy && <ProductCollection
           title={
