@@ -1,0 +1,51 @@
+@import "../../../src/scss/helpers/color";
+
+$main-navbar-height: 90px;
+
+.sakura-logo {
+  margin: auto;
+  display: block;
+}
+
+.header-nav {
+  height: $main-navbar-height;
+  background-color: white;
+  opacity: 0.9;
+}
+
+.non-fixed-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90px;
+}
+
+.fixed-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  animation: smoothScroll 0.8s forwards;
+  width: 100%;
+  background: rgba(white, 90%);
+  height: 90px;
+}
+
+.nav-title {
+  color: $middle-lavender;
+  letter-spacing: 3px;
+  font-weight: 300;
+  padding: 8px 16px;
+  font-size: 16px;
+}
+
+@keyframes smoothScroll {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}

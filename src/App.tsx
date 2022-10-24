@@ -13,8 +13,8 @@ import {
 import { Navigate } from "react-router-dom";
 import { useSelector, useAppDispatch } from "./redux/hooks";
 import { getShoppingCart } from "./redux/shoppingCart/slice";
-import { UserForm } from './pages/userForm/UserForm';
-import { CheckoutPage } from './pages/checkoutPage/CheckoutPage';
+import { UserForm } from "./pages/userForm/UserForm";
+import { CheckoutPage } from "./pages/checkoutPage/CheckoutPage";
 
 const PrivateRoute = ({ children }) => {
   const jwt = useSelector((state) => state.user.token);
@@ -46,9 +46,9 @@ function App() {
           <Route
             path="/shoppingCart"
             element={
-              <PrivateRoute>
-                <ShoppingCart />
-              </PrivateRoute>
+              // <PrivateRoute>
+              <ShoppingCart />
+              // </PrivateRoute>
             }
           />
           <Route

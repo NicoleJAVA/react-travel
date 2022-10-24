@@ -10,3 +10,4 @@ export * from "./productList";
 export * from "./paymentCard";
 export * from "./paymentForm";
 export * from "./checkoutCard";
+export * from "./navbar";
