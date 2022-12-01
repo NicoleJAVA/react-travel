@@ -15,10 +15,11 @@
   margin-bottom: 4px;
   display: flex;
   font-size: 14px;
-  color: $purple
+  color: $purple;
 }
 
-.cart-item-text {}
+.cart-item-text {
+}
 
 .cart-item-img {
   width: 204px;
@@ -117,6 +118,15 @@
 .checkout-right-col {
   display: flex;
   width: 45%;
+  align-items: center;
+  flex-direction: row-reverse;
+  flex: 0 0 auto;
+  color: $middle-lavender;
+}
+
+.checkout-btn {
+  display: flex;
+  width: 100%;
   align-items: center;
   flex-direction: row-reverse;
   flex: 0 0 auto;

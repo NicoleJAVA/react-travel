@@ -8,16 +8,16 @@ import { useState } from "react";
 import {
   updateCart,
   deleteShoppingCartItems,
-  applyCoupon
+  applyCoupon,
 } from "../../redux/shoppingCart/slice";
 import { useNavigate } from "react-router-dom";
-import { API_SOURCE, UDEMY } from '../../helpers/constants';
+import { API_SOURCE, UDEMY } from "../../helpers/constants";
 
 const isUdemy = API_SOURCE === UDEMY;
 
 export const ShoppingCart: React.FC = () => {
   const loadingCart = useSelector((s) => s.shoppingCart.loading);
-  const shoppingCart = useSelector((s) => s.shoppingCart.items)
+  const shoppingCart = useSelector((s) => s.shoppingCart.items);
   const [couponCode, setCouponCode] = useState<string>("");
 
   let shoppingCartItems;
@@ -29,30 +29,30 @@ export const ShoppingCart: React.FC = () => {
 
   const onCartPlus = (cart) => {
     onUpdateCart(cart, cart.qty + 1);
-  }
+  };
 
   const onCartMinus = (cart) => {
     if (cart.qty <= 1) return;
 
     onUpdateCart(cart, cart.qty - 1);
-  }
+  };
 
   const onUpdateCart = (cart, quantity) => {
     const cartData = {
       cartId: cart.id,
       productId: cart.product.id,
       qty: quantity,
-    }
+    };
     dispatch(updateCart(cartData));
-  }
+  };
 
   const updateCouponCode = (e) => {
     setCouponCode(e.target.value);
-  }
+  };
 
   const onApplyCoupon = () => {
     dispatch(applyCoupon({ couponCode: couponCode }));
-  }
+  };
 
   const jwt = useSelector((s) => s.user.token);
   const dispatch = useAppDispatch();
@@ -66,7 +66,8 @@ export const ShoppingCart: React.FC = () => {
           <Col span={16}>
             <div className={styles["product-list-container"]}>
               {/* {isUdemy && <ProductList data={shoppingCartItems.map((s) => s.touristRoute)} />} */}
-              {!isUdemy && shoppingCartItems &&
+              {!isUdemy &&
+                shoppingCartItems &&
                 shoppingCartItems.map((item, i) => (
                   <div key={`cart-item-${i}`} className={styles["cart-item"]}>
                     <div className={styles["cart-item-text"]}>
@@ -78,14 +79,18 @@ export const ShoppingCart: React.FC = () => {
                       <div className={styles["cart-item-divider"]}></div>
                       <div className={styles["cart-item-second-row"]}>
                         <div className={styles["cart-item-qty-wrap"]}>
-                          <div className={theme["mb-1"]}>
-                            數量： {item.qty}
-                          </div>
+                          <div className={theme["mb-1"]}>數量： {item.qty}</div>
                           <div className={styles["cart-item-qty-buttons"]}>
-                            <div className={styles["left-rounded"]} onClick={() => onCartMinus(item)}>
+                            <div
+                              className={styles["left-rounded"]}
+                              onClick={() => onCartMinus(item)}
+                            >
                               -
                             </div>
-                            <div className={styles["right-rounded"]} onClick={() => onCartPlus(item)}>
+                            <div
+                              className={styles["right-rounded"]}
+                              onClick={() => onCartPlus(item)}
+                            >
                               +
                             </div>
                           </div>
@@ -95,31 +100,20 @@ export const ShoppingCart: React.FC = () => {
                         <div>折扣價 ${item.final_total}</div>
                       </div>
                     </div>
-                    <div className={styles["cart-item-img"]}>
-
-                    </div>
+                    <div className={styles["cart-item-img"]}></div>
                   </div>
-                ))
-              }
+                ))}
             </div>
           </Col>
           {/* payment */}
           <Col span={8}>
-
-
-
-
             <div className={styles["cart-checkout-section"]}>
-              <div className={styles["cart-checkout-title"]}>
-                CHECKOUT
-              </div>
+              <div className={styles["cart-checkout-title"]}>CHECKOUT</div>
 
               {/* row */}
               <div className={styles["checkout-row"]}>
                 <div className={styles["checkout-left-col"]}>
-                  <div className={styles["checkout-label"]}>
-                    總計
-                  </div>
+                  <div className={styles["checkout-label"]}>總計</div>
                 </div>
                 <div className={styles["checkout-right-col"]}>
                   $ {shoppingCart.total}
@@ -129,9 +123,7 @@ export const ShoppingCart: React.FC = () => {
               {/* row */}
               <div className={styles["checkout-row"]}>
                 <div className={styles["checkout-left-col"]}>
-                  <div className={styles["checkout-label"]}>
-                    折扣價
-                  </div>
+                  <div className={styles["checkout-label"]}>折扣價</div>
                 </div>
                 <div className={styles["checkout-right-col"]}>
                   $ {shoppingCart.final_total}
@@ -141,14 +133,43 @@ export const ShoppingCart: React.FC = () => {
               {/* row */}
               <div className={styles["checkout-row"]}>
                 <div className={styles["checkout-left-col"]}>
-                  <input type="text" className={styles["coupon-input"]} placeholder="請輸入優惠碼" onChange={updateCouponCode} />
+                  <input
+                    type="text"
+                    className={styles["coupon-input"]}
+                    placeholder="請輸入優惠碼"
+                    onChange={updateCouponCode}
+                  />
                 </div>
                 <div className={styles["checkout-right-col"]}>
-                  <div className={styles["coupon-btn"]} onClick={() => onApplyCoupon()}>套用優惠碼</div>
+                  <div
+                    className={styles["coupon-btn"]}
+                    onClick={() => onApplyCoupon()}
+                  >
+                    套用優惠碼
+                  </div>
+                </div>
+              </div>
+
+              {/* row */}
+              <div className={styles["checkout-row"]}>
+                {/* <div className={styles["checkout-left-col"]}>
+                  <input
+                    type="text"
+                    className={styles["coupon-input"]}
+                    placeholder="請輸入優惠碼"
+                    onChange={updateCouponCode}
+                  />
+                </div> */}
+                <div className={styles["checkout-btn"]}>
+                  <div
+                    className={styles["coupon-btn"]}
+                    onClick={() => navigate("/userForm")}
+                  >
+                    結帳
+                  </div>
                 </div>
               </div>
             </div>
-
           </Col>
         </Row>
       </Spin>
