@@ -36,8 +36,7 @@ export const ProductCollection: React.FC<PropsType> = ({
             {<Row>
               {
                 products.map((product, i) => (
-                  <>
-                    <div className={styles["product-card"]} >
+                    <div key={`product-${i}`} className={styles["product-card"]} >
                       <div className={theme["ratio-wrap"]} style={imgStyle}>
 
                         <img className={`${theme["ratio"]} ${styles[""]}`}
@@ -73,8 +72,6 @@ export const ProductCollection: React.FC<PropsType> = ({
                         </div>
                       </div>
                     </div>
-
-                  </>
                 ))
               }
 
