@@ -15,27 +15,34 @@ export const Navbar: React.FC<PropsType> = ({ children }) => {
     if (fixedNav && fixedNav.current) {
       setNavOffset(fixedNav.current.offsetTop);
     }
+
+    const setNabarFixed = () => {
+      if (!(fixedNav && fixedNav.current)) {
+        // console.log(""); // todo stday
+        console.log("A"); // todo stday
+      } else {
+        console.log("B"); // todo stday
+
+      }
+      // if (!(fixedNav && fixedNav.current)) return; // todo stday 這行是否可以不用存在
+
+      // console.log("scrollY navOffset", window.scrollY, navOffset); // todo stday
+
+      if (window.scrollY > navOffset) {
+        setIsFixed(true);
+      } else {
+        setIsFixed(false);
+      }
+    };
+
     window.addEventListener("scroll", setNabarFixed);
 
-  }, []);
-  const setNabarFixed = () => {
-    if (!(fixedNav && fixedNav.current)) {
-      // console.log(""); // todo stday
-      console.log("A.."); // todo stday
-    } else {
-      console.log("B.."); // todo stday
+    return () => {
+      console.log("remove 監聽器"); // todo stday
 
-    }
-    if (!(fixedNav && fixedNav.current)) return;
-
-    if (window.scrollY > navOffset) {
-      setIsFixed(true);
-    } else {
-      setIsFixed(false);
-    }
-  };
-
-  // window.addEventListener("scroll", setNabarFixed);
+      window.removeEventListener("scroll", setNabarFixed);
+    };
+  }, [navOffset]);
 
   const onClickHome = () => {
     navigate("/");

@@ -15,15 +15,13 @@ export const Navbar: React.FC<PropsType> = ({ children }) => {
     if (fixedNav && fixedNav.current) {
       setNavOffset(fixedNav.current.offsetTop);
     }
-    window.addEventListener("scroll", setNabarFixed);
-
   }, []);
   const setNabarFixed = () => {
     if (!(fixedNav && fixedNav.current)) {
       // console.log(""); // todo stday
-      console.log("A.."); // todo stday
+      console.log("AAA"); // todo stday
     } else {
-      console.log("B.."); // todo stday
+      console.log("BBB"); // todo stday
 
     }
     if (!(fixedNav && fixedNav.current)) return;
@@ -35,7 +33,7 @@ export const Navbar: React.FC<PropsType> = ({ children }) => {
     }
   };
 
-  // window.addEventListener("scroll", setNabarFixed);
+  window.addEventListener("scroll", setNabarFixed);
 
   const onClickHome = () => {
     navigate("/");
