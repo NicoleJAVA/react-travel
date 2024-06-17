@@ -1,0 +1,80 @@
+@import "../../../src/scss/helpers/color";
+
+.content-container {
+  width: 500px;
+  margin: auto;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.data-table {
+  width: 100%;
+  margin-bottom: 20px;
+  border-bottom: 1px solid $purple;
+}
+
+.data-table>thead {
+  height: 30px;
+}
+
+.data-table>tbody>tr {
+  height: 30px;
+}
+
+.data-table>tfoot {
+  border-top: 1px solid rgba($light-gray, 0.5);
+}
+
+
+.text-theme {
+  color: $purple
+}
+
+.text-start {
+  text-align: start;
+}
+
+.text-end {
+  text-align: right;
+}
+
+.order-total-label {
+  color: $purple;
+  text-align: right;
+  font-weight: 600;
+}
+
+.order-total {
+  text-align: right;
+}
+
+.user-column-label {
+  width: 150px;
+  text-align: start;
+  color: $purple
+}
+
+.not-paid {
+  color: orange;
+  font-weight: 600;
+}
+
+.paid {
+  color: lightblue;
+  font-weight: 600;
+}
+
+.pay-btn-container {
+  display: flex;
+  justify-content: end;
+}
+
+.pay-btn {
+  width: 120px;
+  background: $middle-lavender;
+  color: white;
+  text-align: center;
+  padding: 7px;
+  border-radius: 8px;
+  cursor: pointer;
+}

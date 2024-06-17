@@ -11,3 +11,4 @@ export * from "./paymentCard";
 export * from "./paymentForm";
 export * from "./checkoutCard";
 export * from "./navbar";
+export * from "./adminNavbar";

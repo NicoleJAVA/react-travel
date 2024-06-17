@@ -15,6 +15,8 @@ import { useSelector, useAppDispatch } from "./redux/hooks";
 import { getShoppingCart } from "./redux/shoppingCart/slice";
 import { UserForm } from "./pages/userForm/UserForm";
 import { CheckoutPage } from "./pages/checkoutPage/CheckoutPage";
+import { AdminLayout } from "./layout/adminLayout/AdminLayout";
+import { OrdersPage } from "./pages/ordersPage";
 
 const PrivateRoute = ({ children }) => {
   const jwt = useSelector((state) => state.user.token);
@@ -43,6 +45,8 @@ function App() {
           <Route path="/search/:keyword" element={<SearchPage />} />
           <Route path="/userForm" element={<UserForm />} />
           <Route path="/checkout/:orderId" element={<CheckoutPage />} />
+          <Route path="/dashboard/*" element={<AdminLayout />} />
+          {/* <Route path="/dashboard/orders" element={<OrdersPage />} /> */}
           <Route
             path="/shoppingCart"
             element={
